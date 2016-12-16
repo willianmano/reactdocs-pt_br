@@ -1,0 +1,481 @@
+
+
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Renderizando elementos - React</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="Renderizando elementos - React">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://facebook.github.io/react/docs/rendering-elements.html">
+  <meta property="og:image" content="https://facebook.github.io/react/img/logo_og.png">
+  <meta property="og:description" content="A JavaScript library for building user interfaces">
+  <meta property="fb:app_id" content="623268441017527">
+
+  <link rel="shortcut icon" href="/react/favicon.ico">
+  <link rel="alternate" type="application/rss+xml" title="React" href="https://facebook.github.io/react/feed.xml">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css" />
+  <link rel="stylesheet" href="/react/css/syntax.css">
+  <link rel="stylesheet" href="/react/css/codemirror.css">
+  <link rel="stylesheet" href="/react/css/react.css">
+
+  <script src="//use.typekit.net/vqa1hcx.js"></script>
+  <script>try{Typekit.load();}catch(e){}</script>
+
+  <!--[if lte IE 8]>
+  <script src="/react/js/html5shiv.min.js"></script>
+  <script src="/react/js/es5-shim.min.js"></script>
+  <script src="/react/js/es5-sham.min.js"></script>
+  <![endif]-->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script>
+  <script src="/react/js/codemirror.js"></script>
+  <script src="/react/js/javascript.js"></script>
+  <script src="/react/js/xml.js"></script>
+  <script src="/react/js/jsx.js"></script>
+  <script src="/react/js/react.js"></script>
+  <script src="/react/js/react-dom.js"></script>
+  <script src="/react/js/babel.min.js"></script>
+  <script src="/react/js/live_editor.js"></script>
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="nav-main">
+  <div class="wrap">
+    <a class="nav-home" href="/react/">
+      <img class="nav-logo" src="/react/img/logo.svg" width="36" height="36">
+      React
+    </a>
+    <div class="nav-lists">
+      <ul class="nav-site nav-site-internal">
+        <li><a href="/react/docs/hello-world.html" class="active">Documentação</a></li>
+        <li><a href="/react/tutorial/tutorial.html">Tutorial</a></li>
+        <li><a href="/react/community/support.html">Comunidade</a></li>
+      </ul>
+      <ul class="nav-site nav-site-external">
+        <li><a href="https://github.com/facebook/react">GitHub</a></li>
+        <li><a href="https://github.com/facebook/react/releases">v15.4.0</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+    <section class="content wrap documentationContent">
+  <div class="inner-content">
+    <a class="edit-page-link" href="https://github.com/facebook/react/tree/master/docs/docs/rendering-elements.md" target="_blank">Edit on GitHub</a>
+    <h1>
+      Renderizando elementos
+    </h1>
+    <div class="subHeader"></div>
+
+    <p>Elementos são os menores blocos de construção de aplicação React.</p>
+
+<p>Um elemento descreve o que você quer ver na tela:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">const</span> <span class="nx">element</span> <span class="o">=</span> <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Hello</span><span class="p">,</span> <span class="nx">world</span><span class="o">&lt;</span><span class="err">/h1&gt;;</span>
+</code></pre></div>
+<p>Ao contrário dos elementos DOM do broswer, elementos React são objetos puros, e são baratos para serem criados. React DOM cuida da atualização do DOM para corresponder aos elementos React.</p>
+
+<blockquote>
+<p><strong>Nota:</strong></p>
+
+<p>Pode ser confundido elementos com um conceito amplamente conhecido de &quot;componentes&quot;. Nós iremos introduzir componentes na <a href="/react/docs/components-and-props.html">próxima seção</a>. Elementos são do que componentes &quot;são feitos&quot;, e nós encorajamos você a ler esta seção antes de seguir adiante.</p>
+</blockquote>
+<h2><a class="anchor" name="renderizando-um-elemtno-no-dom"></a>Renderizando um elemtno no DOM <a class="hash-link" href="#renderizando-um-elemtno-no-dom">#</a></h2>
+<p>Vamos dizer que existe uma <code>&lt;div&gt;</code> em algum lugar do seu arquivo HTML:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;root&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</code></pre></div>
+<p>Nós chamamos este de nó &quot;root&quot; por que tudo dentro dele será gerenciado pelo React DOM.</p>
+
+<p>Aplicações contruídas apenas com React usualmente tem um único nó DOM raiz. Se você está integrando o React em uma aplicação existente, você poderá ter tantos nós raiz DOM quanto quiser</p>
+
+<p>Para renderizar um elemento React dentro de um nó DOM raiz, passe ambos para <code>ReactDOM.render()</code>:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">const</span> <span class="nx">element</span> <span class="o">=</span> <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Hello</span><span class="p">,</span> <span class="nx">world</span><span class="o">&lt;</span><span class="err">/h1&gt;;</span>
+<span class="nx">ReactDOM</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
+  <span class="nx">element</span><span class="p">,</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre></div>
+<p><a href="http://codepen.io/gaearon/pen/rrpgNB?editors=1010">Teste este código no CodePen.</a></p>
+
+<p>Exibe &quot;Hello World&quot; na página.</p>
+<h2><a class="anchor" name="atualizando-os-elementos-renderizados"></a>Atualizando os elementos renderizados <a class="hash-link" href="#atualizando-os-elementos-renderizados">#</a></h2>
+<p>Elementos React são <a href="https://en.wikipedia.org/wiki/Immutable_object">imutáveis</a>. Uma vez que vocie crie um elemento, você não pode alterar suas propriedades ou seus filhos. Um elemento é como um único quadro de um filme: ele representa a interface de usuário até um certo ponto.</p>
+
+<p>Como nosso conhecimento até agora, a única maneira de atualizar a interface de usuário é criar um novo elemento, e passar ele para <code>ReactDOM.render()</code>.</p>
+
+<p>Considere este exemplo de relógio tique-taque:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kd">function</span> <span class="nx">tick</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">element</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Hello</span><span class="p">,</span> <span class="nx">world</span><span class="o">!&lt;</span><span class="err">/h1&gt;</span>
+      <span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span><span class="nx">It</span> <span class="nx">is</span> <span class="p">{</span><span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">toLocaleTimeString</span><span class="p">()}.</span><span class="o">&lt;</span><span class="err">/h2&gt;</span>
+    <span class="o">&lt;</span><span class="err">/div&gt;</span>
+  <span class="p">);</span>
+<span class="hll">  <span class="nx">ReactDOM</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
+</span><span class="hll">    <span class="nx">element</span><span class="p">,</span>
+</span><span class="hll">    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
+</span><span class="hll">  <span class="p">);</span>
+</span><span class="p">}</span>
+
+<span class="nx">setInterval</span><span class="p">(</span><span class="nx">tick</span><span class="p">,</span> <span class="mi">1000</span><span class="p">);</span>
+</code></pre></div>
+<p><a href="http://codepen.io/gaearon/pen/gwoJZk?editors=0010">Teste este código no CodePen.</a></p>
+
+<p>É chamado o método <code>ReactDOM.render()</code> a cada segundo do através do callback <a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers/setInterval"><code>setInterval()</code></a>.</p>
+
+<blockquote>
+<p><strong>Nota:</strong></p>
+
+<p>Em prática, a maioria da aplicações React só chama o <code>ReactDOM.render()</code> uma vez. Nas próximas seções nós aprenderemos como esse código é encapsulado em <a href="/react/docs/state-and-lifecycle.html">estados do componentes</a>.</p>
+
+<p>Nós recomendamos que você não ignore tópicos porque eles complemento um ao outro.</p>
+</blockquote>
+<h2><a class="anchor" name="react-somente-atualizar-o-que--necessrio"></a>React somente atualizar o que é necessário <a class="hash-link" href="#react-somente-atualizar-o-que--necessrio">#</a></h2>
+<p>React DOM compara o elemento e seus filhos com o anterior, e somente aplica as atualizações necessários no DOM para levar o DOM ao estado desejado.</p>
+
+<p>Você pode verificar inspecionando o <a href="http://codepen.io/gaearon/pen/gwoJZk?editors=0010">último exemplo</a> com as ferramentas do browser:</p>
+
+<p><img src="/react/img/docs/granular-dom-updates.gif" alt="Inspetor do DOM exibindo as atualizações granulares"></p>
+
+<p>Embora criemos um elemento descrevendo toda a árvore da interface do usuário em cada momento, somente o nó de texto cujo conteúdo foi alterado é atualizado pelo React DOM.</p>
+
+<p>Em nossa experiência, pensar em como a interface de usuário deve ser em cada momento ao invés de como alterá-la ao longo do tempo elimina uma classe inteira de bugs.</p>
+
+
+    <div class="docs-prevnext">
+      
+        <a class="docs-prev" href="/react/docs/introducing-jsx.html">&larr; Anterior</a>
+      
+      
+        <a class="docs-next" href="/react/docs/components-and-props.html">Próximo &rarr;</a>
+      
+    </div>
+  </div>
+
+  <div class="nav-docs">
+  <!-- Docs Nav -->
+  
+    <div class="nav-docs-section">
+      <h3>Quick Start</h3>
+      <ul>
+        
+          <li>
+            <a href="/react/docs/installation.html">Instalação</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/hello-world.html">Hello World</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/introducing-jsx.html">Introdução ao JSX</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/rendering-elements.html" class="active">Renderizando elementos</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/components-and-props.html">Componentes e propriedades</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/state-and-lifecycle.html">Estado(state) e ciclo de vida</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/handling-events.html">Manipulando eventos</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/conditional-rendering.html">Conditional Rendering</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/lists-and-keys.html">Lists and Keys</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/forms.html">Forms</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/lifting-state-up.html">Lifting State Up</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/composition-vs-inheritance.html">Composition vs Inheritance</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/thinking-in-react.html">Thinking In React</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  
+    <div class="nav-docs-section">
+      <h3>Advanced Guides</h3>
+      <ul>
+        
+          <li>
+            <a href="/react/docs/jsx-in-depth.html">JSX In Depth</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/typechecking-with-proptypes.html">Typechecking With PropTypes</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/refs-and-the-dom.html">Refs and the DOM</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/uncontrolled-components.html">Uncontrolled Components</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/optimizing-performance.html">Optimizing Performance</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/react-without-es6.html">React Without ES6</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/react-without-jsx.html">React Without JSX</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/reconciliation.html">Reconciliation</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/context.html">Context</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/web-components.html">Web Components</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/higher-order-components.html">Higher-Order Components</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  
+    <div class="nav-docs-section">
+      <h3>Reference</h3>
+      <ul>
+        
+          <li>
+            <a href="/react/docs/react-api.html">React</a>
+            
+              <ul>
+                
+                  <li>
+                    <a href="/react/docs/react-component.html">React.Component</a>
+                  </li>
+                
+              </ul>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/react-dom.html">ReactDOM</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/react-dom-server.html">ReactDOMServer</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/dom-elements.html">DOM Elements</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/events.html">SyntheticEvent</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/addons.html">Add-Ons</a>
+            
+              <ul>
+                
+                  <li>
+                    <a href="/react/docs/perf.html">Performance Tools</a>
+                  </li>
+                
+                  <li>
+                    <a href="/react/docs/test-utils.html">Test Utilities</a>
+                  </li>
+                
+                  <li>
+                    <a href="/react/docs/animation.html">Animation</a>
+                  </li>
+                
+                  <li>
+                    <a href="/react/docs/create-fragment.html">Keyed Fragments</a>
+                  </li>
+                
+                  <li>
+                    <a href="/react/docs/update.html">Immutability Helpers</a>
+                  </li>
+                
+                  <li>
+                    <a href="/react/docs/pure-render-mixin.html">PureRenderMixin</a>
+                  </li>
+                
+                  <li>
+                    <a href="/react/docs/shallow-compare.html">Shallow Compare</a>
+                  </li>
+                
+                  <li>
+                    <a href="/react/docs/two-way-binding-helpers.html">Two-way Binding Helpers</a>
+                  </li>
+                
+              </ul>
+            
+          </li>
+        
+      </ul>
+    </div>
+  
+
+  <!-- Contributing Nav -->
+  
+    <div class="nav-docs-section">
+      <h3>Contributing</h3>
+      <ul>
+        
+          <li>
+            <a href="/react/contributing/how-to-contribute.html">How to Contribute</a>
+          </li>
+        
+          <li>
+            <a href="/react/contributing/codebase-overview.html">Codebase Overview</a>
+          </li>
+        
+          <li>
+            <a href="/react/contributing/implementation-notes.html">Implementation Notes</a>
+          </li>
+        
+          <li>
+            <a href="/react/contributing/design-principles.html">Design Principles</a>
+          </li>
+        
+      </ul>
+    </div>
+  
+
+</div>
+
+</section>
+
+
+    <footer class="nav-footer">
+  <section class="sitemap">
+    <a href="/react/" class="nav-home">
+    </a>
+    <div>
+      <h5><a href="/react/docs/">Docs</a></h5>
+      <a href="/react/docs/hello-world.html">Quick Start</a>
+      <a href="/react/docs/thinking-in-react.html">Thinking in React</a>
+      <a href="/react/tutorial/tutorial.html">Tutorial</a>
+      <a href="/react/docs/jsx-in-depth.html">Advanced Guides</a>
+    </div>
+    <div>
+      <h5><a href="/react/community/support.html">Community</a></h5>
+      <a href="http://stackoverflow.com/questions/tagged/reactjs" target="_blank">Stack Overflow</a>
+      <a href="https://discuss.reactjs.org/" target="_blank">Discussion Forum</a>
+      <a href="https://discord.gg/0ZcbPKXt5bZjGY5n" target="_blank">Reactiflux Chat</a>
+      <a href="https://www.facebook.com/react" target="_blank">Facebook</a>
+      <a href="https://twitter.com/reactjs" target="_blank">Twitter</a>
+    </div>
+    <div>
+      <h5><a href="/react/community/support.html">Resources</a></h5>
+      <a href="/react/community/conferences.html">Conferences</a>
+      <a href="/react/community/videos.html">Videos</a>
+      <a href="https://github.com/facebook/react/wiki/Examples" target="_blank">Examples</a>
+      <a href="https://github.com/facebook/react/wiki/Complementary-Tools" target="_blank">Complementary Tools</a>
+    </div>
+    <div>
+      <h5>More</h5>
+      <a href="/react/blog/">Blog</a>
+      <a href="https://github.com/facebook/react" target="_blank">GitHub</a>
+      <a href="http://facebook.github.io/react-native/" target="_blank">React Native</a>
+      <a href="/react/acknowledgements.html">Acknowledgements</a>
+    </div>
+  </section>
+  <a href="https://code.facebook.com/projects/" target="_blank" class="fbOpenSource">
+    <img src="/react/img/oss_logo.png" alt="Facebook Open Source" width="170" height="45"/>
+  </a>
+  <section class="copyright">
+    Copyright © 2016 Facebook Inc.
+  </section>
+</footer>
+
+  </div>
+
+  <div id="fb-root"></div>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-41298772-1', 'facebook.github.io');
+    ga('send', 'pageview');
+
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=623268441017527";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    docsearch({
+      apiKey: '36221914cce388c46d0420343e0bb32e',
+      indexName: 'react',
+      inputSelector: '#algolia-doc-search'
+    });
+  </script>
+</body>
+</html>

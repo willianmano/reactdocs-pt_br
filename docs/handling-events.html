@@ -1,0 +1,522 @@
+
+
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Manipulando eventos - React</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="Manipulando eventos - React">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://facebook.github.io/react/docs/handling-events.html">
+  <meta property="og:image" content="https://facebook.github.io/react/img/logo_og.png">
+  <meta property="og:description" content="A JavaScript library for building user interfaces">
+  <meta property="fb:app_id" content="623268441017527">
+
+  <link rel="shortcut icon" href="/react/favicon.ico">
+  <link rel="alternate" type="application/rss+xml" title="React" href="https://facebook.github.io/react/feed.xml">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css" />
+  <link rel="stylesheet" href="/react/css/syntax.css">
+  <link rel="stylesheet" href="/react/css/codemirror.css">
+  <link rel="stylesheet" href="/react/css/react.css">
+
+  <script src="//use.typekit.net/vqa1hcx.js"></script>
+  <script>try{Typekit.load();}catch(e){}</script>
+
+  <!--[if lte IE 8]>
+  <script src="/react/js/html5shiv.min.js"></script>
+  <script src="/react/js/es5-shim.min.js"></script>
+  <script src="/react/js/es5-sham.min.js"></script>
+  <![endif]-->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script>
+  <script src="/react/js/codemirror.js"></script>
+  <script src="/react/js/javascript.js"></script>
+  <script src="/react/js/xml.js"></script>
+  <script src="/react/js/jsx.js"></script>
+  <script src="/react/js/react.js"></script>
+  <script src="/react/js/react-dom.js"></script>
+  <script src="/react/js/babel.min.js"></script>
+  <script src="/react/js/live_editor.js"></script>
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="nav-main">
+  <div class="wrap">
+    <a class="nav-home" href="/react/">
+      <img class="nav-logo" src="/react/img/logo.svg" width="36" height="36">
+      React
+    </a>
+    <div class="nav-lists">
+      <ul class="nav-site nav-site-internal">
+        <li><a href="/react/docs/hello-world.html" class="active">Documentação</a></li>
+        <li><a href="/react/tutorial/tutorial.html">Tutorial</a></li>
+        <li><a href="/react/community/support.html">Comunidade</a></li>
+      </ul>
+      <ul class="nav-site nav-site-external">
+        <li><a href="https://github.com/facebook/react">GitHub</a></li>
+        <li><a href="https://github.com/facebook/react/releases">v15.4.0</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+    <section class="content wrap documentationContent">
+  <div class="inner-content">
+    <a class="edit-page-link" href="https://github.com/facebook/react/tree/master/docs/docs/handling-events.md" target="_blank">Edit on GitHub</a>
+    <h1>
+      Manipulando eventos
+    </h1>
+    <div class="subHeader"></div>
+
+    <p>Manipular eventos de elementos do React é muito parecido com manipular eventos de elementos do DOM. Existem algumas diferenças de sintaxe:</p>
+
+<ul>
+<li>Eventos do React são nomeados usando camelCase, ao invés de lowercase.</li>
+<li>Com JSX você passa uma função como o manipulador do evento, ao invês de uma string.</li>
+</ul>
+
+<p>Por exemplo, em HTML:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span></span><span class="p">&lt;</span><span class="nt">button</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;activateLasers()&quot;</span><span class="p">&gt;</span>
+  Activate Lasers
+<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</code></pre></div>
+<p>é levemente diferente com React:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="hll"><span class="o">&lt;</span><span class="nx">button</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{</span><span class="nx">activateLasers</span><span class="p">}</span><span class="o">&gt;</span>
+</span>  <span class="nx">Activate</span> <span class="nx">Lasers</span>
+<span class="o">&lt;</span><span class="err">/button&gt;</span>
+</code></pre></div>
+<p>Outra diferença é que você não pode retornar <code>false</code> para prevenir o comportamento padrão(prevent default) em React. Você deve chamar <code>preventDefault</code> explicitamente. Por exemplo, com HTML puro, para prevenir o comportamento padrão de um link para abrir uma nova página, você pode escrver:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;console.log(&#39;The link was clicked.&#39;); return false&quot;</span><span class="p">&gt;</span>
+  Click me
+<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</code></pre></div>
+<p>Em React, isto poderia ser:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kd">function</span> <span class="nx">ActionLink</span><span class="p">()</span> <span class="p">{</span>
+<span class="hll">  <span class="kd">function</span> <span class="nx">handleClick</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="hll">    <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+</span><span class="hll">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;The link was clicked.&#39;</span><span class="p">);</span>
+</span><span class="hll">  <span class="p">}</span>
+</span>
+  <span class="k">return</span> <span class="p">(</span>
+<span class="hll">    <span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;#&quot;</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{</span><span class="nx">handleClick</span><span class="p">}</span><span class="o">&gt;</span>
+</span>      <span class="nx">Click</span> <span class="nx">me</span>
+    <span class="o">&lt;</span><span class="err">/a&gt;</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Aqui, <code>e</code> é um evento sintético. React define estes eventos sintéticos de acordo com a <a href="https://www.w3.org/TR/DOM-Level-3-Events/">especificação da W3C</a>, então você não precisa se preocupar com compatibilidade entre browsers. Veja o guia de referência <a href="/react/docs/events.html"><code>SyntheticEvent</code></a> para aprender mais.</p>
+
+<p>Ao usar React você geralmente não precisará chamar <code>addEventListener</code> para adicionar ouvintes(listeners) para um elemento do DOM depois que ele é criado. Em vez disso, basta  fornecer um ouvinte quando o elemento é renderizado incialmente.</p>
+
+<p>Quando você define um componente usando uma <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Classes">classe ES6 </a>, um padrão comum é para um manipulador de evento(event handler) ser um método na classe. Por exemplo, este componente <code>Toggle</code> renderiza um botão que permite ao usuário alterar o estado entre &quot;ON&quot; e &quot;OFF&quot;:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">class</span> <span class="nx">Toggle</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="nx">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kr">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span><span class="nx">isToggleOn</span><span class="o">:</span> <span class="kc">true</span><span class="p">};</span>
+
+<span class="hll">    <span class="c1">// This binding is necessary to make `this` work in the callback</span>
+</span><span class="hll">    <span class="k">this</span><span class="p">.</span><span class="nx">handleClick</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">handleClick</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+</span>  <span class="p">}</span>
+
+<span class="hll">  <span class="nx">handleClick</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="hll">    <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">(</span><span class="nx">prevState</span> <span class="o">=&gt;</span> <span class="p">({</span>
+</span><span class="hll">      <span class="nx">isToggleOn</span><span class="o">:</span> <span class="o">!</span><span class="nx">prevState</span><span class="p">.</span><span class="nx">isToggleOn</span>
+</span><span class="hll">    <span class="p">}));</span>
+</span><span class="hll">  <span class="p">}</span>
+</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+<span class="hll">      <span class="o">&lt;</span><span class="nx">button</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">handleClick</span><span class="p">}</span><span class="o">&gt;</span>
+</span>        <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">isToggleOn</span> <span class="o">?</span> <span class="s1">&#39;ON&#39;</span> <span class="o">:</span> <span class="s1">&#39;OFF&#39;</span><span class="p">}</span>
+      <span class="o">&lt;</span><span class="err">/button&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">ReactDOM</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
+  <span class="o">&lt;</span><span class="nx">Toggle</span> <span class="o">/&gt;</span><span class="p">,</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre></div>
+<p><a href="http://codepen.io/gaearon/pen/xEmzGg?editors=0010">Teste este código no CodePen.</a></p>
+
+<p>Você precisa ser cuidadoso sobre o significado de <code>this</code> em callbacks do JSX. Em JavaScript, métodos de classes não são  <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_objects/Function/bind">vinculados</a> por padrão. Se você esquecer de vincular <code>this.handleClick</code> e passá-lo para <code>onClick</code>, <code>this</code> será <code>undefined</code> quando a função for realmente chamada.</p>
+
+<p>Este não é um comportamente específico do React; é parte de <a href="https://www.smashingmagazine.com/2014/01/understanding-javascript-function-prototype-bind/">como as funções funcionam em JavaScript JavaScript</a>. Geralmente, se você se refere a um método sem o <code>()</code> depois dele, como em <code>onClick={this.handleClick}</code>, você deve vincular esse método.</p>
+
+<p>Se chamar <code>bind</code> irrita você, existem duas maneiras de contornar isso. Se você estiver usando a
+<a href="https://babeljs.io/docs/plugins/transform-class-properties/">sintaxe de inicialização de propriedade</a>, você pode usar inicializadores para vincular corretamente os callbacks:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">class</span> <span class="nx">LoggingButton</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+<span class="hll">  <span class="c1">// This syntax ensures `this` is bound within handleClick.</span>
+</span><span class="hll">  <span class="c1">// Warning: this is *experimental* syntax.</span>
+</span><span class="hll">  <span class="nx">handleClick</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span><span class="hll">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;this is:&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+</span><span class="hll">  <span class="p">}</span>
+</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">button</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">handleClick</span><span class="p">}</span><span class="o">&gt;</span>
+        <span class="nx">Click</span> <span class="nx">me</span>
+      <span class="o">&lt;</span><span class="err">/button&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Esta sintaxe é habilitada por padrão em <a href="https://github.com/facebookincubator/create-react-app">Crie uma aplicação React</a>.</p>
+
+<p>Se você não esta usando a sintaxe de inicialização de propriedade, você pode usar uma <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Functions/Arrow_functions">arrow function</a> no seu callback:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">class</span> <span class="nx">LoggingButton</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="nx">handleClick</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;this is:&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+<span class="hll">    <span class="c1">// This syntax ensures `this` is bound within handleClick</span>
+</span><span class="hll">    <span class="k">return</span> <span class="p">(</span>
+</span><span class="hll">      <span class="o">&lt;</span><span class="nx">button</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{(</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">handleClick</span><span class="p">(</span><span class="nx">e</span><span class="p">)}</span><span class="o">&gt;</span>
+</span>        <span class="nx">Click</span> <span class="nx">me</span>
+      <span class="o">&lt;</span><span class="err">/button&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>O problema com essa sintaxe é que um callback diferente é criado toda vez que <code>LogginButton</code> é renderizado. Na maioria dos casos, não tem problema com isso. No entanto, se o callback é passado como propriedade(prop) para um um componente abaixo, estes componentes podem fazer uma re-renderização extra. Nós geralmente recomendamos fazer o vínculo(binding) no construtor para evitar esse tipo de problema de desempenho.</p>
+
+
+    <div class="docs-prevnext">
+      
+        <a class="docs-prev" href="/react/docs/state-and-lifecycle.html">&larr; Anterior</a>
+      
+      
+        <a class="docs-next" href="/react/docs/conditional-rendering.html">Próximo &rarr;</a>
+      
+    </div>
+  </div>
+
+  <div class="nav-docs">
+  <!-- Docs Nav -->
+  
+    <div class="nav-docs-section">
+      <h3>Quick Start</h3>
+      <ul>
+        
+          <li>
+            <a href="/react/docs/installation.html">Instalação</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/hello-world.html">Hello World</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/introducing-jsx.html">Introdução ao JSX</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/rendering-elements.html">Renderizando elementos</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/components-and-props.html">Componentes e propriedades</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/state-and-lifecycle.html">Estado(state) e ciclo de vida</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/handling-events.html" class="active">Manipulando eventos</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/conditional-rendering.html">Conditional Rendering</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/lists-and-keys.html">Lists and Keys</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/forms.html">Forms</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/lifting-state-up.html">Lifting State Up</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/composition-vs-inheritance.html">Composition vs Inheritance</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/thinking-in-react.html">Thinking In React</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  
+    <div class="nav-docs-section">
+      <h3>Advanced Guides</h3>
+      <ul>
+        
+          <li>
+            <a href="/react/docs/jsx-in-depth.html">JSX In Depth</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/typechecking-with-proptypes.html">Typechecking With PropTypes</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/refs-and-the-dom.html">Refs and the DOM</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/uncontrolled-components.html">Uncontrolled Components</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/optimizing-performance.html">Optimizing Performance</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/react-without-es6.html">React Without ES6</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/react-without-jsx.html">React Without JSX</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/reconciliation.html">Reconciliation</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/context.html">Context</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/web-components.html">Web Components</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/higher-order-components.html">Higher-Order Components</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  
+    <div class="nav-docs-section">
+      <h3>Reference</h3>
+      <ul>
+        
+          <li>
+            <a href="/react/docs/react-api.html">React</a>
+            
+              <ul>
+                
+                  <li>
+                    <a href="/react/docs/react-component.html">React.Component</a>
+                  </li>
+                
+              </ul>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/react-dom.html">ReactDOM</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/react-dom-server.html">ReactDOMServer</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/dom-elements.html">DOM Elements</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/events.html">SyntheticEvent</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/addons.html">Add-Ons</a>
+            
+              <ul>
+                
+                  <li>
+                    <a href="/react/docs/perf.html">Performance Tools</a>
+                  </li>
+                
+                  <li>
+                    <a href="/react/docs/test-utils.html">Test Utilities</a>
+                  </li>
+                
+                  <li>
+                    <a href="/react/docs/animation.html">Animation</a>
+                  </li>
+                
+                  <li>
+                    <a href="/react/docs/create-fragment.html">Keyed Fragments</a>
+                  </li>
+                
+                  <li>
+                    <a href="/react/docs/update.html">Immutability Helpers</a>
+                  </li>
+                
+                  <li>
+                    <a href="/react/docs/pure-render-mixin.html">PureRenderMixin</a>
+                  </li>
+                
+                  <li>
+                    <a href="/react/docs/shallow-compare.html">Shallow Compare</a>
+                  </li>
+                
+                  <li>
+                    <a href="/react/docs/two-way-binding-helpers.html">Two-way Binding Helpers</a>
+                  </li>
+                
+              </ul>
+            
+          </li>
+        
+      </ul>
+    </div>
+  
+
+  <!-- Contributing Nav -->
+  
+    <div class="nav-docs-section">
+      <h3>Contributing</h3>
+      <ul>
+        
+          <li>
+            <a href="/react/contributing/how-to-contribute.html">How to Contribute</a>
+          </li>
+        
+          <li>
+            <a href="/react/contributing/codebase-overview.html">Codebase Overview</a>
+          </li>
+        
+          <li>
+            <a href="/react/contributing/implementation-notes.html">Implementation Notes</a>
+          </li>
+        
+          <li>
+            <a href="/react/contributing/design-principles.html">Design Principles</a>
+          </li>
+        
+      </ul>
+    </div>
+  
+
+</div>
+
+</section>
+
+
+    <footer class="nav-footer">
+  <section class="sitemap">
+    <a href="/react/" class="nav-home">
+    </a>
+    <div>
+      <h5><a href="/react/docs/">Docs</a></h5>
+      <a href="/react/docs/hello-world.html">Quick Start</a>
+      <a href="/react/docs/thinking-in-react.html">Thinking in React</a>
+      <a href="/react/tutorial/tutorial.html">Tutorial</a>
+      <a href="/react/docs/jsx-in-depth.html">Advanced Guides</a>
+    </div>
+    <div>
+      <h5><a href="/react/community/support.html">Community</a></h5>
+      <a href="http://stackoverflow.com/questions/tagged/reactjs" target="_blank">Stack Overflow</a>
+      <a href="https://discuss.reactjs.org/" target="_blank">Discussion Forum</a>
+      <a href="https://discord.gg/0ZcbPKXt5bZjGY5n" target="_blank">Reactiflux Chat</a>
+      <a href="https://www.facebook.com/react" target="_blank">Facebook</a>
+      <a href="https://twitter.com/reactjs" target="_blank">Twitter</a>
+    </div>
+    <div>
+      <h5><a href="/react/community/support.html">Resources</a></h5>
+      <a href="/react/community/conferences.html">Conferences</a>
+      <a href="/react/community/videos.html">Videos</a>
+      <a href="https://github.com/facebook/react/wiki/Examples" target="_blank">Examples</a>
+      <a href="https://github.com/facebook/react/wiki/Complementary-Tools" target="_blank">Complementary Tools</a>
+    </div>
+    <div>
+      <h5>More</h5>
+      <a href="/react/blog/">Blog</a>
+      <a href="https://github.com/facebook/react" target="_blank">GitHub</a>
+      <a href="http://facebook.github.io/react-native/" target="_blank">React Native</a>
+      <a href="/react/acknowledgements.html">Acknowledgements</a>
+    </div>
+  </section>
+  <a href="https://code.facebook.com/projects/" target="_blank" class="fbOpenSource">
+    <img src="/react/img/oss_logo.png" alt="Facebook Open Source" width="170" height="45"/>
+  </a>
+  <section class="copyright">
+    Copyright © 2016 Facebook Inc.
+  </section>
+</footer>
+
+  </div>
+
+  <div id="fb-root"></div>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-41298772-1', 'facebook.github.io');
+    ga('send', 'pageview');
+
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=623268441017527";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    docsearch({
+      apiKey: '36221914cce388c46d0420343e0bb32e',
+      indexName: 'react',
+      inputSelector: '#algolia-doc-search'
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,781 @@
+
+
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Estado(state) e ciclo de vida - React</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="Estado(state) e ciclo de vida - React">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://facebook.github.io/react/docs/state-and-lifecycle.html">
+  <meta property="og:image" content="https://facebook.github.io/react/img/logo_og.png">
+  <meta property="og:description" content="A JavaScript library for building user interfaces">
+  <meta property="fb:app_id" content="623268441017527">
+
+  <link rel="shortcut icon" href="/react/favicon.ico">
+  <link rel="alternate" type="application/rss+xml" title="React" href="https://facebook.github.io/react/feed.xml">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css" />
+  <link rel="stylesheet" href="/react/css/syntax.css">
+  <link rel="stylesheet" href="/react/css/codemirror.css">
+  <link rel="stylesheet" href="/react/css/react.css">
+
+  <script src="//use.typekit.net/vqa1hcx.js"></script>
+  <script>try{Typekit.load();}catch(e){}</script>
+
+  <!--[if lte IE 8]>
+  <script src="/react/js/html5shiv.min.js"></script>
+  <script src="/react/js/es5-shim.min.js"></script>
+  <script src="/react/js/es5-sham.min.js"></script>
+  <![endif]-->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script>
+  <script src="/react/js/codemirror.js"></script>
+  <script src="/react/js/javascript.js"></script>
+  <script src="/react/js/xml.js"></script>
+  <script src="/react/js/jsx.js"></script>
+  <script src="/react/js/react.js"></script>
+  <script src="/react/js/react-dom.js"></script>
+  <script src="/react/js/babel.min.js"></script>
+  <script src="/react/js/live_editor.js"></script>
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="nav-main">
+  <div class="wrap">
+    <a class="nav-home" href="/react/">
+      <img class="nav-logo" src="/react/img/logo.svg" width="36" height="36">
+      React
+    </a>
+    <div class="nav-lists">
+      <ul class="nav-site nav-site-internal">
+        <li><a href="/react/docs/hello-world.html" class="active">Documentação</a></li>
+        <li><a href="/react/tutorial/tutorial.html">Tutorial</a></li>
+        <li><a href="/react/community/support.html">Comunidade</a></li>
+      </ul>
+      <ul class="nav-site nav-site-external">
+        <li><a href="https://github.com/facebook/react">GitHub</a></li>
+        <li><a href="https://github.com/facebook/react/releases">v15.4.0</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+    <section class="content wrap documentationContent">
+  <div class="inner-content">
+    <a class="edit-page-link" href="https://github.com/facebook/react/tree/master/docs/docs/state-and-lifecycle.md" target="_blank">Edit on GitHub</a>
+    <h1>
+      Estado(state) e ciclo de vida
+    </h1>
+    <div class="subHeader"></div>
+
+    <p>Considerando o exemplo de relógio tique-taque de <a href="/react/docs/rendering-elements.html#updating-the-rendered-element">uma das seções anteriores</a>.</p>
+
+<p>Até agora aprendemos apenas uma maneira de atualizar a interface do usuário.</p>
+
+<p>Nós chamamos <code>ReactDOM.render()</code> para alterar a saída renderizada:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kd">function</span> <span class="nx">tick</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">element</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Hello</span><span class="p">,</span> <span class="nx">world</span><span class="o">!&lt;</span><span class="err">/h1&gt;</span>
+      <span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span><span class="nx">It</span> <span class="nx">is</span> <span class="p">{</span><span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">toLocaleTimeString</span><span class="p">()}.</span><span class="o">&lt;</span><span class="err">/h2&gt;</span>
+    <span class="o">&lt;</span><span class="err">/div&gt;</span>
+  <span class="p">);</span>
+<span class="hll">  <span class="nx">ReactDOM</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
+</span><span class="hll">    <span class="nx">element</span><span class="p">,</span>
+</span><span class="hll">    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
+</span><span class="hll">  <span class="p">);</span>
+</span><span class="p">}</span>
+
+<span class="nx">setInterval</span><span class="p">(</span><span class="nx">tick</span><span class="p">,</span> <span class="mi">1000</span><span class="p">);</span>
+</code></pre></div>
+<p><a href="http://codepen.io/gaearon/pen/gwoJZk?editors=0010">Teste este código no CodePen.</a></p>
+
+<p>Nesta seção, aprenderemos como tornar o componente <code>Clock</code> verdadeiramente reusável e encapsulado. Ele irá setar seu próprio horário e se atualiza-rá a cada segundo.</p>
+
+<p>Nós podemos começar por encapsular como o relógio se parece:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kd">function</span> <span class="nx">Clock</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">(</span>
+<span class="hll">    <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+</span><span class="hll">      <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Hello</span><span class="p">,</span> <span class="nx">world</span><span class="o">!&lt;</span><span class="err">/h1&gt;</span>
+</span><span class="hll">      <span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span><span class="nx">It</span> <span class="nx">is</span> <span class="p">{</span><span class="nx">props</span><span class="p">.</span><span class="nx">date</span><span class="p">.</span><span class="nx">toLocaleTimeString</span><span class="p">()}.</span><span class="o">&lt;</span><span class="err">/h2&gt;</span>
+</span><span class="hll">    <span class="o">&lt;</span><span class="err">/div&gt;</span>
+</span>  <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">tick</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">ReactDOM</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
+<span class="hll">    <span class="o">&lt;</span><span class="nx">Clock</span> <span class="nx">date</span><span class="o">=</span><span class="p">{</span><span class="k">new</span> <span class="nb">Date</span><span class="p">()}</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span>    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">setInterval</span><span class="p">(</span><span class="nx">tick</span><span class="p">,</span> <span class="mi">1000</span><span class="p">);</span>
+</code></pre></div>
+<p><a href="http://codepen.io/gaearon/pen/dpdoYR?editors=0010">Teste este código no CodePen.</a></p>
+
+<p>Entretanto, esquecemos um requisito crucial: o fato de que o <code>Clock</code> setar o horário e atualizar a interface do usuário a cada segundo deve ser um detalhe de implenentação do <code>Clock</code>.</p>
+
+<p>Idealmente queremos escrever apenas uma vez e ter o <code>Clock</code> atualizando-se:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">ReactDOM</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
+<span class="hll">  <span class="o">&lt;</span><span class="nx">Clock</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span>  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre></div>
+<p>Para implementar isto, nós precisamos adicionar &quot;state(estado)&quot; ao componente <code>Clock</code>.</p>
+
+<p>State(estado) é similar ao props(propriedades), mas ele é privado e totalmente controlado pelo componente.</p>
+
+<p>Nós <a href="/react/docs/components-and-props.html#functional-and-class-components">mencionamos antes</a>
+que os componentes definidos como classes tem alguns recursos adicionais. Estado local é exatamente isso: um recurso disponível apenas para classes.</p>
+<h2><a class="anchor" name="convertendo-uma-funo-para-uma-classe"></a>Convertendo uma função para uma classe <a class="hash-link" href="#convertendo-uma-funo-para-uma-classe">#</a></h2>
+<p>Você pode converter um componente funcional como o <code>Clock</code> para uma classe em cinco passos:</p>
+
+<ol>
+<li><p>Crie uma <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Classes">classe ES6</a> com o mesmo nome que extenda de <code>React.Component</code>.</p></li>
+<li><p>Adicione um método vazio e único chamado <code>render()</code>.</p></li>
+<li><p>Mova o corpo da função para dentro do método <code>render()</code>.</p></li>
+<li><p>Altere <code>props</code> para <code>this.props</code> no corpo do método <code>render()</code>.</p></li>
+<li><p>Delete o restante da declaração vazia da função.</p></li>
+</ol>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">class</span> <span class="nx">Clock</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Hello</span><span class="p">,</span> <span class="nx">world</span><span class="o">!&lt;</span><span class="err">/h1&gt;</span>
+        <span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span><span class="nx">It</span> <span class="nx">is</span> <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">date</span><span class="p">.</span><span class="nx">toLocaleTimeString</span><span class="p">()}.</span><span class="o">&lt;</span><span class="err">/h2&gt;</span>
+      <span class="o">&lt;</span><span class="err">/div&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><a href="http://codepen.io/gaearon/pen/zKRGpo?editors=0010">Teste este código no CodePen.</a></p>
+
+<p><code>Clock</code> agora é definida como uma classe aon invés de uma função.</p>
+<h2><a class="anchor" name="adicionando-estado-local-para-a-classe"></a>Adicionando estado local para a classe <a class="hash-link" href="#adicionando-estado-local-para-a-classe">#</a></h2>
+<p>Nós iremos mover <code>date</code> de props para state em três passos:</p>
+
+<p>1) Substitua <code>this.props.date</code> com <code>this.state.date</code> no método <code>render()</code>:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">class</span> <span class="nx">Clock</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Hello</span><span class="p">,</span> <span class="nx">world</span><span class="o">!&lt;</span><span class="err">/h1&gt;</span>
+<span class="hll">        <span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span><span class="nx">It</span> <span class="nx">is</span> <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">date</span><span class="p">.</span><span class="nx">toLocaleTimeString</span><span class="p">()}.</span><span class="o">&lt;</span><span class="err">/h2&gt;</span>
+</span>      <span class="o">&lt;</span><span class="err">/div&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>2) Adicione um <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Classes#Constructor">construtor de classe</a> que atribua o estado inicial de <code>this.state</code>:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">class</span> <span class="nx">Clock</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="nx">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kr">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+<span class="hll">    <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span><span class="nx">date</span><span class="o">:</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">()};</span>
+</span>  <span class="p">}</span>
+
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Hello</span><span class="p">,</span> <span class="nx">world</span><span class="o">!&lt;</span><span class="err">/h1&gt;</span>
+        <span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span><span class="nx">It</span> <span class="nx">is</span> <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">date</span><span class="p">.</span><span class="nx">toLocaleTimeString</span><span class="p">()}.</span><span class="o">&lt;</span><span class="err">/h2&gt;</span>
+      <span class="o">&lt;</span><span class="err">/div&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Note como passamos <code>props</code> para o construtor:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span>  <span class="nx">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+<span class="hll">    <span class="kr">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+</span>    <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span><span class="nx">date</span><span class="o">:</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">()};</span>
+  <span class="p">}</span>
+</code></pre></div>
+<p>Componentes de classes devem sempre chamar o construtor com <code>props</code>;</p>
+
+<p>3) Remova o prop <code>date</code> do elemento <code>&lt;Clock /&gt;</code> element:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">ReactDOM</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
+<span class="hll">  <span class="o">&lt;</span><span class="nx">Clock</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span>  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre></div>
+<p>Iremos depois adicionar o código do horário de volta para o componente em si.</p>
+
+<p>O resultado se parece com isto:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">class</span> <span class="nx">Clock</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+<span class="hll">  <span class="nx">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="hll">    <span class="kr">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+</span><span class="hll">    <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span><span class="nx">date</span><span class="o">:</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">()};</span>
+</span><span class="hll">  <span class="p">}</span>
+</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Hello</span><span class="p">,</span> <span class="nx">world</span><span class="o">!&lt;</span><span class="err">/h1&gt;</span>
+<span class="hll">        <span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span><span class="nx">It</span> <span class="nx">is</span> <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">date</span><span class="p">.</span><span class="nx">toLocaleTimeString</span><span class="p">()}.</span><span class="o">&lt;</span><span class="err">/h2&gt;</span>
+</span>      <span class="o">&lt;</span><span class="err">/div&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">ReactDOM</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
+<span class="hll">  <span class="o">&lt;</span><span class="nx">Clock</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span>  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre></div>
+<p><a href="http://codepen.io/gaearon/pen/KgQpJd?editors=0010">Teste este código no CodePen.</a></p>
+
+<p>Próximo, nós fazer o <code>Clock</code> setar seu próprio horário e atualizar-se a cada segundo.</p>
+<h2><a class="anchor" name="adicionando-mtodos-do-ciclo-de-vida-a-classe"></a>Adicionando métodos do ciclo de vida a classe <a class="hash-link" href="#adicionando-mtodos-do-ciclo-de-vida-a-classe">#</a></h2>
+<p>Em aplicações com muitos componentes, é muito importante liberar recursos obtidos pelos componentes quando eles forem destruídos.</p>
+
+<p>Nós queremos <a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers/setInterval">setar o horário</a> sempre que o <code>Clock</code> é renderizado no DOM pela primeira vez. Isto é chamado de &quot;mounting&quot;(montagem) em React.</p>
+
+<p>Nós também queremos <a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers/clearInterval">limpar o horário</a> sempre que o DOM produzido pelo <code>Clock</code> for removido. Isto é chamado de &quot;unmounting&quot;(desmontagem) en React.</p>
+
+<p>Nós podemos declarar métodos especiais na classe do componente para executar alguns códigos quando um componente mount e quando unmount.</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">class</span> <span class="nx">Clock</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="nx">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kr">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span><span class="nx">date</span><span class="o">:</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">()};</span>
+  <span class="p">}</span>
+
+<span class="hll">  <span class="nx">componentDidMount</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="hll">
+</span><span class="hll">  <span class="p">}</span>
+</span>
+<span class="hll">  <span class="nx">componentWillUnmount</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="hll">
+</span><span class="hll">  <span class="p">}</span>
+</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Hello</span><span class="p">,</span> <span class="nx">world</span><span class="o">!&lt;</span><span class="err">/h1&gt;</span>
+        <span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span><span class="nx">It</span> <span class="nx">is</span> <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">date</span><span class="p">.</span><span class="nx">toLocaleTimeString</span><span class="p">()}.</span><span class="o">&lt;</span><span class="err">/h2&gt;</span>
+      <span class="o">&lt;</span><span class="err">/div&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Estes métodos são chamados ganchos do ciclo de vida(&quot;lifecycle hooks&quot;).</p>
+
+<p>O gancho <code>componentDidMount</code> executa depois que a saída do componente é renderizada para o DOM. Este é um bom lugar para setar o horário:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span>  <span class="nx">componentDidMount</span><span class="p">()</span> <span class="p">{</span>
+<span class="hll">    <span class="k">this</span><span class="p">.</span><span class="nx">timerID</span> <span class="o">=</span> <span class="nx">setInterval</span><span class="p">(</span>
+</span><span class="hll">      <span class="p">()</span> <span class="o">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">tick</span><span class="p">(),</span>
+</span><span class="hll">      <span class="mi">1000</span>
+</span><span class="hll">    <span class="p">);</span>
+</span>  <span class="p">}</span>
+</code></pre></div>
+<p>Note how we save the timer ID right on <code>this</code>.</p>
+
+<p>While <code>this.props</code> is set up by React itself and <code>this.state</code> has a special meaning, you are free to add additional fields to the class manually if you need to store something that is not used for the visual output.</p>
+
+<p>If you don&#39;t use something in <code>render()</code>, it shouldn&#39;t be in the state.</p>
+
+<p>We will tear down the timer in the <code>componentWillUnmount()</code> lifecycle hook:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span>  <span class="nx">componentWillUnmount</span><span class="p">()</span> <span class="p">{</span>
+<span class="hll">    <span class="nx">clearInterval</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">timerID</span><span class="p">);</span>
+</span>  <span class="p">}</span>
+</code></pre></div>
+<p>Finally, we will implement the <code>tick()</code> method that runs every second.</p>
+
+<p>It will use <code>this.setState()</code> to schedule updates to the component local state:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">class</span> <span class="nx">Clock</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="nx">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kr">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span><span class="nx">date</span><span class="o">:</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">()};</span>
+  <span class="p">}</span>
+
+  <span class="nx">componentDidMount</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">timerID</span> <span class="o">=</span> <span class="nx">setInterval</span><span class="p">(</span>
+      <span class="p">()</span> <span class="o">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">tick</span><span class="p">(),</span>
+      <span class="mi">1000</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="nx">componentWillUnmount</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">clearInterval</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">timerID</span><span class="p">);</span>
+  <span class="p">}</span>
+
+<span class="hll">  <span class="nx">tick</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="hll">    <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+</span><span class="hll">      <span class="nx">date</span><span class="o">:</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">()</span>
+</span><span class="hll">    <span class="p">});</span>
+</span><span class="hll">  <span class="p">}</span>
+</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Hello</span><span class="p">,</span> <span class="nx">world</span><span class="o">!&lt;</span><span class="err">/h1&gt;</span>
+        <span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span><span class="nx">It</span> <span class="nx">is</span> <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">date</span><span class="p">.</span><span class="nx">toLocaleTimeString</span><span class="p">()}.</span><span class="o">&lt;</span><span class="err">/h2&gt;</span>
+      <span class="o">&lt;</span><span class="err">/div&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">ReactDOM</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
+  <span class="o">&lt;</span><span class="nx">Clock</span> <span class="o">/&gt;</span><span class="p">,</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre></div>
+<p><a href="http://codepen.io/gaearon/pen/amqdNA?editors=0010">Teste este código no CodePen.</a></p>
+
+<p>Agora o horário muda a cada segundo.</p>
+
+<p>Vamos recaptular rapidamente o que está acontecendo e a ordem que os métodos são chamados:</p>
+
+<p>1) Quando <code>&lt;Clock /&gt;</code> é passado para <code>ReactDOM.render()</code>, React chama o construtor do componente <code>Clock</code>. Uma vez que <code>Clock</code> precisa exibir o horário atual, ele inicializa o <code>this.state</code> com um objeto incluindo o horário atual. Mais tarde iremos atualizar este state.</p>
+
+<p>2) React então chama o método <code>render()</code> do componente <code>Clock</code>. É assim que o React aprende o que deve ser exibido na tela. React então atualiza o DOM com a saída da renderização do <code>Clock</code>.</p>
+
+<p>3) Quando a saída de <code>Clock</code> é inserida no DOM, React chama o gancho do ciclo de vida <code>componenteDidMount()</code>. Dentro dele, o componente <code>Clock</code> pede ao browser que configure um temporizador para chamar <code>tick()</code> a cada segundo.</p>
+
+<p>4) A cada segundo o browser chama o método <code>tick()</code>. Dentro dele, o componente <code>Clock</code> agenda uma atualização da interface de usuário chamando <code>setState()</code> com um objeto contendo horário atual. Graças a chamada ao <code>setState()</code>, React sabe que o estado mudou, e chama o método <code>render()</code> novamente para aprender o que deve ser exibido na tela. Desta vez, <code>this.state.date</code> no método <code>render()</code> será diferente, então a saída do render incluirá o horário atualizado. Na sequência React atualiza o DOM.</p>
+
+<p>5) Se o componente <code>Clock</code> for removido do DOM, React chama o gancho do ciclo de vida <code>componentWillUnmount</code> então o temporizador é parado.</p>
+<h2><a class="anchor" name="usando-state-corretamente"></a>Usando State corretamente <a class="hash-link" href="#usando-state-corretamente">#</a></h2>
+<p>Existem três coisas que você precisa saber sobre <code>setState()</code>.</p>
+<h3><a class="anchor" name="no-modifique-o-state-diretamente"></a>Não modifique o State diretamente <a class="hash-link" href="#no-modifique-o-state-diretamente">#</a></h3>
+<p>Por exemplo, isto não irá re-renderizar um componente:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="c1">// Errado</span>
+<span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">comment</span> <span class="o">=</span> <span class="s1">&#39;Hello&#39;</span><span class="p">;</span>
+</code></pre></div>
+<p>Ao invés disso, use <code>setState()</code>:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="c1">// Correto</span>
+<span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span><span class="nx">comment</span><span class="o">:</span> <span class="s1">&#39;Hello&#39;</span><span class="p">});</span>
+</code></pre></div>
+<p>O único lugar que você pode atribuir <code>this.state</code> é no construtor.</p>
+<h3><a class="anchor" name="atualizaes-de-state-podem-ser-assncronas"></a>Atualizações de State podem ser assíncronas <a class="hash-link" href="#atualizaes-de-state-podem-ser-assncronas">#</a></h3>
+<p>Por performance, React pode chamar múltiplos <code>setState()</code> em uma única atualização.</p>
+
+<p>Por causao do <code>this.props</code> e <code>this.state</code> poder ser atualizados asíncronamente, você não deve confiar em seus valores para calcular o próximo estado.</p>
+
+<p>Por exemplo, este código pode falhar falhar ao atualizar o contador:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="c1">// Wrong</span>
+<span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+  <span class="nx">counter</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">counter</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">increment</span><span class="p">,</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>Para resolver isso, use uma segunda forma de <code>setState()</code> que aceita uma função ao invés de um objeto. Esta função receberá o estado anterior como primeiro argumento, e o props no tempo em que a atualização é aplicada como segundo argumento:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="c1">// Correto</span>
+<span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">((</span><span class="nx">prevState</span><span class="p">,</span> <span class="nx">props</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">({</span>
+  <span class="nx">counter</span><span class="o">:</span> <span class="nx">prevState</span><span class="p">.</span><span class="nx">counter</span> <span class="o">+</span> <span class="nx">props</span><span class="p">.</span><span class="nx">increment</span>
+<span class="p">}));</span>
+</code></pre></div>
+<p>Nós usamos uma <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Functions/Arrow_functions">função de seta (arrow function)</a> acima, mas também funciona com funções regulares:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="c1">// Correto</span>
+<span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">prevState</span><span class="p">,</span> <span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="nx">counter</span><span class="o">:</span> <span class="nx">prevState</span><span class="p">.</span><span class="nx">counter</span> <span class="o">+</span> <span class="nx">props</span><span class="p">.</span><span class="nx">increment</span>
+  <span class="p">};</span>
+<span class="p">});</span>
+</code></pre></div><h3><a class="anchor" name="atualizaes-de-state-so-mesclados"></a>Atualizações de State são mesclados <a class="hash-link" href="#atualizaes-de-state-so-mesclados">#</a></h3>
+<p>Quando você chama <code>setState()</code>, React mescla o objeto fornecido dentro do estado atual.</p>
+
+<p>Por exemplo, seu state pode conter várias variáveis independentes:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span>  <span class="nx">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kr">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
+<span class="hll">      <span class="nx">posts</span><span class="o">:</span> <span class="p">[],</span>
+</span><span class="hll">      <span class="nx">comments</span><span class="o">:</span> <span class="p">[]</span>
+</span>    <span class="p">};</span>
+  <span class="p">}</span>
+</code></pre></div>
+<p>Então, você pode atualizá-lo independentemente com chamadas separadas de <code>setState()</code>:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span>  <span class="nx">componentDidMount</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">fetchPosts</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+<span class="hll">        <span class="nx">posts</span><span class="o">:</span> <span class="nx">response</span><span class="p">.</span><span class="nx">posts</span>
+</span>      <span class="p">});</span>
+    <span class="p">});</span>
+
+    <span class="nx">fetchComments</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+<span class="hll">        <span class="nx">comments</span><span class="o">:</span> <span class="nx">response</span><span class="p">.</span><span class="nx">comments</span>
+</span>      <span class="p">});</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+</code></pre></div>
+<p>A mescla é superficial, então <code>this.setState({comments})</code> deixa <code>this.state.posts</code> intacto, porém substitui <code>this.state.comments</code> completamente.</p>
+<h2><a class="anchor" name="os-dados-fluem-para-baixo"></a>Os dados fluem para baixo <a class="hash-link" href="#os-dados-fluem-para-baixo">#</a></h2>
+<p>Nem os componentes pai nem filhos podem saber se determinado componente é com estado(statefull) or sem estado(stateless), e eles não devem se importar se são definidos como função ou uma classe.</p>
+
+<p>É por isto que state é frequentemente chamdo de local ou encapsulado. Não é acessível a nenhum outro componente que não seja aquele que o possui e o configura.</p>
+
+<p>Um componente deve escolher passar seu estado para baixo como props para seus componentes filhos:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span><span class="nx">It</span> <span class="nx">is</span> <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">date</span><span class="p">.</span><span class="nx">toLocaleTimeString</span><span class="p">()}.</span><span class="o">&lt;</span><span class="err">/h2&gt;</span>
+</code></pre></div>
+<p>Isto também funciona para componenet definidos pelo usuário:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="o">&lt;</span><span class="nx">FormattedDate</span> <span class="nx">date</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">date</span><span class="p">}</span> <span class="o">/&gt;</span>
+</code></pre></div>
+<p>O componente <code>FormattedDate</code> deve receber o <code>date</code> em seus props e não deve saber se vem do state de <code>Clock</code>, de props, ou se foi digitado a mão:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kd">function</span> <span class="nx">FormattedDate</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span><span class="nx">It</span> <span class="nx">is</span> <span class="p">{</span><span class="nx">props</span><span class="p">.</span><span class="nx">date</span><span class="p">.</span><span class="nx">toLocaleTimeString</span><span class="p">()}.</span><span class="o">&lt;</span><span class="err">/h2&gt;;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><a href="http://codepen.io/gaearon/pen/zKRqNB?editors=0010">Teste este código no CodePen.</a></p>
+
+<p>Isto é comumente chamado de fluxo de dados de &quot;baixo para cima&quot; ou &quot;unidirecional&quot;. Qualquer estado é sempre propriedade de algum componente específico, e qualquer informação ou interface de usuário entrege por um estado só pode afetar componentes &quot;abaixo&quot; deles na árvore.</p>
+
+<p>Se você imaginar uma árvore de componente como uma cachoeira de props, cada state do componente é como uma fonte de água adicional, que se junta a ele em algum ponto arbitrário mas também flui para baixo.</p>
+
+<p>Para mostrar que todos os componentes são verdadeiramente isolados, nós criamos um componente <code>App</code> que renderiza três <code>&lt;Clock /&gt;</code>s:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kd">function</span> <span class="nx">App</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+<span class="hll">      <span class="o">&lt;</span><span class="nx">Clock</span> <span class="o">/&gt;</span>
+</span><span class="hll">      <span class="o">&lt;</span><span class="nx">Clock</span> <span class="o">/&gt;</span>
+</span><span class="hll">      <span class="o">&lt;</span><span class="nx">Clock</span> <span class="o">/&gt;</span>
+</span>    <span class="o">&lt;</span><span class="err">/div&gt;</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">ReactDOM</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
+  <span class="o">&lt;</span><span class="nx">App</span> <span class="o">/&gt;</span><span class="p">,</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre></div>
+<p><a href="http://codepen.io/gaearon/pen/vXdGmd?editors=0010">Teste este código no CodePen.</a></p>
+
+<p>Cada <code>Clock</code> configura seu próprio horário e os atualiza independentemente.</p>
+
+<p>Em aplicações React, se um componente é com estado ou sem estado é considerado um detalhe de implementação de um componente que pode mudar ao longo do tempo. Você pode usar componentes sem estado dentro de componentes com estado e vice e versa.</p>
+
+
+    <div class="docs-prevnext">
+      
+        <a class="docs-prev" href="/react/docs/components-and-props.html">&larr; Anterior</a>
+      
+      
+        <a class="docs-next" href="/react/docs/handling-events.html">Próximo &rarr;</a>
+      
+    </div>
+  </div>
+
+  <div class="nav-docs">
+  <!-- Docs Nav -->
+  
+    <div class="nav-docs-section">
+      <h3>Quick Start</h3>
+      <ul>
+        
+          <li>
+            <a href="/react/docs/installation.html">Instalação</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/hello-world.html">Hello World</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/introducing-jsx.html">Introdução ao JSX</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/rendering-elements.html">Renderizando elementos</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/components-and-props.html">Componentes e propriedades</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/state-and-lifecycle.html" class="active">Estado(state) e ciclo de vida</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/handling-events.html">Manipulando eventos</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/conditional-rendering.html">Conditional Rendering</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/lists-and-keys.html">Lists and Keys</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/forms.html">Forms</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/lifting-state-up.html">Lifting State Up</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/composition-vs-inheritance.html">Composition vs Inheritance</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/thinking-in-react.html">Thinking In React</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  
+    <div class="nav-docs-section">
+      <h3>Advanced Guides</h3>
+      <ul>
+        
+          <li>
+            <a href="/react/docs/jsx-in-depth.html">JSX In Depth</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/typechecking-with-proptypes.html">Typechecking With PropTypes</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/refs-and-the-dom.html">Refs and the DOM</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/uncontrolled-components.html">Uncontrolled Components</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/optimizing-performance.html">Optimizing Performance</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/react-without-es6.html">React Without ES6</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/react-without-jsx.html">React Without JSX</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/reconciliation.html">Reconciliation</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/context.html">Context</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/web-components.html">Web Components</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/higher-order-components.html">Higher-Order Components</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  
+    <div class="nav-docs-section">
+      <h3>Reference</h3>
+      <ul>
+        
+          <li>
+            <a href="/react/docs/react-api.html">React</a>
+            
+              <ul>
+                
+                  <li>
+                    <a href="/react/docs/react-component.html">React.Component</a>
+                  </li>
+                
+              </ul>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/react-dom.html">ReactDOM</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/react-dom-server.html">ReactDOMServer</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/dom-elements.html">DOM Elements</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/events.html">SyntheticEvent</a>
+            
+          </li>
+        
+          <li>
+            <a href="/react/docs/addons.html">Add-Ons</a>
+            
+              <ul>
+                
+                  <li>
+                    <a href="/react/docs/perf.html">Performance Tools</a>
+                  </li>
+                
+                  <li>
+                    <a href="/react/docs/test-utils.html">Test Utilities</a>
+                  </li>
+                
+                  <li>
+                    <a href="/react/docs/animation.html">Animation</a>
+                  </li>
+                
+                  <li>
+                    <a href="/react/docs/create-fragment.html">Keyed Fragments</a>
+                  </li>
+                
+                  <li>
+                    <a href="/react/docs/update.html">Immutability Helpers</a>
+                  </li>
+                
+                  <li>
+                    <a href="/react/docs/pure-render-mixin.html">PureRenderMixin</a>
+                  </li>
+                
+                  <li>
+                    <a href="/react/docs/shallow-compare.html">Shallow Compare</a>
+                  </li>
+                
+                  <li>
+                    <a href="/react/docs/two-way-binding-helpers.html">Two-way Binding Helpers</a>
+                  </li>
+                
+              </ul>
+            
+          </li>
+        
+      </ul>
+    </div>
+  
+
+  <!-- Contributing Nav -->
+  
+    <div class="nav-docs-section">
+      <h3>Contributing</h3>
+      <ul>
+        
+          <li>
+            <a href="/react/contributing/how-to-contribute.html">How to Contribute</a>
+          </li>
+        
+          <li>
+            <a href="/react/contributing/codebase-overview.html">Codebase Overview</a>
+          </li>
+        
+          <li>
+            <a href="/react/contributing/implementation-notes.html">Implementation Notes</a>
+          </li>
+        
+          <li>
+            <a href="/react/contributing/design-principles.html">Design Principles</a>
+          </li>
+        
+      </ul>
+    </div>
+  
+
+</div>
+
+</section>
+
+
+    <footer class="nav-footer">
+  <section class="sitemap">
+    <a href="/react/" class="nav-home">
+    </a>
+    <div>
+      <h5><a href="/react/docs/">Docs</a></h5>
+      <a href="/react/docs/hello-world.html">Quick Start</a>
+      <a href="/react/docs/thinking-in-react.html">Thinking in React</a>
+      <a href="/react/tutorial/tutorial.html">Tutorial</a>
+      <a href="/react/docs/jsx-in-depth.html">Advanced Guides</a>
+    </div>
+    <div>
+      <h5><a href="/react/community/support.html">Community</a></h5>
+      <a href="http://stackoverflow.com/questions/tagged/reactjs" target="_blank">Stack Overflow</a>
+      <a href="https://discuss.reactjs.org/" target="_blank">Discussion Forum</a>
+      <a href="https://discord.gg/0ZcbPKXt5bZjGY5n" target="_blank">Reactiflux Chat</a>
+      <a href="https://www.facebook.com/react" target="_blank">Facebook</a>
+      <a href="https://twitter.com/reactjs" target="_blank">Twitter</a>
+    </div>
+    <div>
+      <h5><a href="/react/community/support.html">Resources</a></h5>
+      <a href="/react/community/conferences.html">Conferences</a>
+      <a href="/react/community/videos.html">Videos</a>
+      <a href="https://github.com/facebook/react/wiki/Examples" target="_blank">Examples</a>
+      <a href="https://github.com/facebook/react/wiki/Complementary-Tools" target="_blank">Complementary Tools</a>
+    </div>
+    <div>
+      <h5>More</h5>
+      <a href="/react/blog/">Blog</a>
+      <a href="https://github.com/facebook/react" target="_blank">GitHub</a>
+      <a href="http://facebook.github.io/react-native/" target="_blank">React Native</a>
+      <a href="/react/acknowledgements.html">Acknowledgements</a>
+    </div>
+  </section>
+  <a href="https://code.facebook.com/projects/" target="_blank" class="fbOpenSource">
+    <img src="/react/img/oss_logo.png" alt="Facebook Open Source" width="170" height="45"/>
+  </a>
+  <section class="copyright">
+    Copyright © 2016 Facebook Inc.
+  </section>
+</footer>
+
+  </div>
+
+  <div id="fb-root"></div>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-41298772-1', 'facebook.github.io');
+    ga('send', 'pageview');
+
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=623268441017527";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    docsearch({
+      apiKey: '36221914cce388c46d0420343e0bb32e',
+      indexName: 'react',
+      inputSelector: '#algolia-doc-search'
+    });
+  </script>
+</body>
+</html>
