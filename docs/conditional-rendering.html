@@ -6,9 +6,9 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Conditional Rendering - React</title>
+  <title>Renderização condicional - React</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta property="og:title" content="Conditional Rendering - React">
+  <meta property="og:title" content="Renderização condicional - React">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://facebook.github.io/react/docs/conditional-rendering.html">
   <meta property="og:image" content="https://facebook.github.io/react/img/logo_og.png">
@@ -16,7 +16,7 @@
   <meta property="fb:app_id" content="623268441017527">
 
   <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="alternate" type="application/rss+xml" title="React" href="https://facebook.github.io/react/feed.xml">
+  <link rel="alternate" type="application/rss+xml" title="React" href="http://localhost:4000//feed.xml">
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css" />
   <link rel="stylesheet" href="/css/syntax.css">
@@ -47,15 +47,15 @@
 
     <div class="nav-main">
   <div class="wrap">
-    <a class="nav-home" href="/react/">
-      <img class="nav-logo" src="/react/img/logo.svg" width="36" height="36">
+    <a class="nav-home" href="/">
+      <img class="nav-logo" src="/img/logo.svg" width="36" height="36">
       React
     </a>
     <div class="nav-lists">
       <ul class="nav-site nav-site-internal">
-        <li><a href="/react/docs/hello-world.html" class="active">Documentação</a></li>
-        <li><a href="/react/tutorial/tutorial.html">Tutorial</a></li>
-        <li><a href="/react/community/support.html">Comunidade</a></li>
+        <li><a href="/docs/hello-world.html" class="active">Documentação</a></li>
+        <li><a href="/tutorial/tutorial.html">Tutorial</a></li>
+        <li><a href="/community/support.html">Comunidade</a></li>
       </ul>
       <ul class="nav-site nav-site-external">
         <li><a href="https://github.com/facebook/react">GitHub</a></li>
@@ -70,15 +70,15 @@
   <div class="inner-content">
     <a class="edit-page-link" href="https://github.com/facebook/react/tree/master/docs/docs/conditional-rendering.md" target="_blank">Edit on GitHub</a>
     <h1>
-      Conditional Rendering
+      Renderização condicional
     </h1>
     <div class="subHeader"></div>
 
-    <p>In React, you can create distinct components that encapsulate behavior you need. Then, you can render only some of them, depending on the state of your application.</p>
+    <p>Em React, você pode criar componentes distintos que encapsulam comportamentos que você precisa. Sem seguida, você pode renderizar apenas alguns deles, dependendo do estado da sua aplicação.</p>
 
-<p>Conditional rendering in React works the same way conditions work in JavaScript. Use JavaScript operators like <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else"><code>if</code></a> or the <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Conditional_Operator">conditional operator</a> to create elements representing the current state, and let React update the UI to match them.</p>
+<p>Renderização condicional em Reac trabalha da mesma maneira que condicionais trabalham no JavaScript. Use operadores JavaScript como o  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else"><code>if</code></a> ou o <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Conditional_Operator">opereador condicional</a> para criar elementes que representam o estado atual, e deixe o React atualizar a interface do usuário.</p>
 
-<p>Consider these two components:</p>
+<p>Considere estes dois componentes:</p>
 <div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kd">function</span> <span class="nx">UserGreeting</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">return</span> <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Welcome</span> <span class="nx">back</span><span class="o">!&lt;</span><span class="err">/h1&gt;;</span>
 <span class="p">}</span>
@@ -87,7 +87,7 @@
   <span class="k">return</span> <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Please</span> <span class="nx">sign</span> <span class="nx">up</span><span class="p">.</span><span class="o">&lt;</span><span class="err">/h1&gt;;</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>We&#39;ll create a <code>Greeting</code> component that displays either of these components depending on whether a user is logged in:</p>
+<p>Nós criaremos um componente <code>Greeting</code> que exibe um desses componentes dependendo se um usuário está logado:</p>
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kd">function</span> <span class="nx">Greeting</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
   <span class="kr">const</span> <span class="nx">isLoggedIn</span> <span class="o">=</span> <span class="nx">props</span><span class="p">.</span><span class="nx">isLoggedIn</span><span class="p">;</span>
 <span class="hll">  <span class="k">if</span> <span class="p">(</span><span class="nx">isLoggedIn</span><span class="p">)</span> <span class="p">{</span>
@@ -102,13 +102,13 @@
 </span><span class="hll">  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
 </span><span class="p">);</span>
 </code></pre></div>
-<p><a href="https://codepen.io/gaearon/pen/ZpVxNq?editors=0011">Try it on CodePen.</a></p>
+<p><a href="https://codepen.io/gaearon/pen/ZpVxNq?editors=0011">Teste este código no CodePen.</a></p>
 
-<p>This example renders a different greeting depending on the value of <code>isLoggedIn</code> prop.</p>
-<h3><a class="anchor" name="element-variables"></a>Element Variables <a class="hash-link" href="#element-variables">#</a></h3>
-<p>You can use variables to store elements. This can help you conditionally render a part of the component while the rest of the output doesn&#39;t change.</p>
+<p>Este exemplo renderiza saudações diferentes dependendo do valor do prop <code>isLoggedIn</code>.</p>
+<h3><a class="anchor" name="variveis-de-elementos"></a>Variáveis de elementos <a class="hash-link" href="#variveis-de-elementos">#</a></h3>
+<p>Você pode usar variáveis para armazenar elementos. Isto pode ajudá-lo a renderizar condicionalmente uma parte de um componente enquanto o resto da saída não é alterado.</p>
 
-<p>Consider these two new components representing Logout and Login buttons:</p>
+<p>Considere estes dois novoc componentes que representam botões Logout e Login:</p>
 <div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kd">function</span> <span class="nx">LoginButton</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">return</span> <span class="p">(</span>
     <span class="o">&lt;</span><span class="nx">button</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{</span><span class="nx">props</span><span class="p">.</span><span class="nx">onClick</span><span class="p">}</span><span class="o">&gt;</span>
@@ -125,9 +125,9 @@
   <span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>In the example below, we will create a <a href="/react/docs/state-and-lifecycle.html#adding-local-state-to-a-class">stateful component</a> called <code>LoginControl</code>.</p>
+<p>No abaixo, iremos criar um <a href="/react/docs/state-and-lifecycle.html#adding-local-state-to-a-class">componente com estado </a> chamado <code>LoginControl</code>.</p>
 
-<p>It will render either <code>&lt;LoginButton /&gt;</code> or <code>&lt;LogoutButton /&gt;</code> depending on its current state. It will also render a <code>&lt;Greeting /&gt;</code> from the previous example:</p>
+<p>Ele irá renderizar <code>&lt;LoginButton /&gt;</code> ou <code>&lt;LogoutButton /&gt;</code> dependendo do seu estado atual. Também irá renderizar um <code>&lt;Greeting /&gt;</code> do exemplo anterior:</p>
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kr">class</span> <span class="nx">LoginControl</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
   <span class="nx">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
     <span class="kr">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
@@ -168,11 +168,11 @@
   <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
 <span class="p">);</span>
 </code></pre></div>
-<p><a href="https://codepen.io/gaearon/pen/QKzAgB?editors=0010">Try it on CodePen.</a></p>
+<p><a href="https://codepen.io/gaearon/pen/QKzAgB?editors=0010">Teste este código no CodePen.</a></p>
 
-<p>While declaring a variable and using an <code>if</code> statement is a fine way to conditionally render a component, sometimes you might want to use a shorter syntax. There are a few ways to inline conditions in JSX, explained below.</p>
-<h3><a class="anchor" name="inline-if-with-logical-ampamp-operator"></a>Inline If with Logical &amp;&amp; Operator <a class="hash-link" href="#inline-if-with-logical-ampamp-operator">#</a></h3>
-<p>You may <a href="/react/docs/introducing-jsx.html#embedding-expressions-in-jsx">embed any expressions in JSX</a> by wrapping them in curly braces. This includes the JavaScript logical <code>&amp;&amp;</code> operator. It can be handy for conditionally including an element:</p>
+<p>Declarar uma variável e usar um operador <code>if</code> é uma boa maneira de renderizar condicionalmente um componente, algumas vezes você vai preferir umsar uma sintaxe mais curta. Existem algumas formas de usar condicionais em linha com JSX, explicadas abaixo:</p>
+<h3><a class="anchor" name="if-em-linha-com-o-operador-ampamp"></a>If em linha com o operador &amp;&amp; <a class="hash-link" href="#if-em-linha-com-o-operador-ampamp">#</a></h3>
+<p>Você pode <a href="/react/docs/introducing-jsx.html#embedding-expressions-in-jsx">incorporar quaisquer expressões em JSX</a> colocando-as entre chaves. Isto inclue o operador lógico do JavaScript <code>&amp;&amp;</code>. Pode ser útil para condicionar a inclusão de um elemento:</p>
 <div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kd">function</span> <span class="nx">Mailbox</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
   <span class="kr">const</span> <span class="nx">unreadMessages</span> <span class="o">=</span> <span class="nx">props</span><span class="p">.</span><span class="nx">unreadMessages</span><span class="p">;</span>
   <span class="k">return</span> <span class="p">(</span>
@@ -193,15 +193,15 @@
   <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
 <span class="p">);</span>
 </code></pre></div>
-<p><a href="https://codepen.io/gaearon/pen/ozJddz?editors=0010">Try it on CodePen.</a></p>
+<p><a href="https://codepen.io/gaearon/pen/ozJddz?editors=0010">Teste este código no CodePen.</a></p>
 
-<p>It works because in JavaScript, <code>true &amp;&amp; expression</code> always evaluates to <code>expression</code>, and <code>false &amp;&amp; expression</code> always evaluates to <code>false</code>.</p>
+<p>Isto funciona porque em Javascript, <code>true &amp;&amp; expression</code> sempre avalia a <code>expression</code>, e <code>false &amp;&amp; expression</code> sempre avalia o <code>false</code>.</p>
 
-<p>Therefore, if the condition is <code>true</code>, the element right after <code>&amp;&amp;</code> will appear in the output. If it is <code>false</code>, React will ignore and skip it.</p>
-<h3><a class="anchor" name="inline-if-else-with-conditional-operator"></a>Inline If-Else with Conditional Operator <a class="hash-link" href="#inline-if-else-with-conditional-operator">#</a></h3>
-<p>Another method for conditionally rendering elements inline is to use the JavaScript conditional operator <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Conditional_Operator"><code>condition ? true : false</code></a>.</p>
+<p>Portanto, se o condicional for <code>true</code>, o elemento da esquerda após o <code>&amp;&amp;</code> aparecerá na saída. Mas se for <code>false</code>, React irá ignorar.</p>
+<h3><a class="anchor" name="if-else-em-linha-com-operador-condicional"></a>If-Else em linha com operador condicional <a class="hash-link" href="#if-else-em-linha-com-operador-condicional">#</a></h3>
+<p>Outro método para renderização condicional de elementos é usando o operador condicional do JavaScript <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Conditional_Operator"><code>condition ? true : false</code></a>.</p>
 
-<p>In the example below, we use it to conditionally render a small block of text.</p>
+<p>No exemplo abaixo, nós usamos ele para condicionalmente renderizar um pequeno bloco de texto.</p>
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
   <span class="kr">const</span> <span class="nx">isLoggedIn</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">isLoggedIn</span><span class="p">;</span>
   <span class="k">return</span> <span class="p">(</span>
@@ -211,7 +211,7 @@
   <span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>It can also be used for larger expressions although it is less obvious what&#39;s going on:</p>
+<p>Também pode ser usado para expressões maiores, embora seja menos óbvio saber o que está acontecendo:</p>
 <div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
   <span class="kr">const</span> <span class="nx">isLoggedIn</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">isLoggedIn</span><span class="p">;</span>
   <span class="k">return</span> <span class="p">(</span>
@@ -225,11 +225,11 @@
   <span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>Just like in JavaScript, it is up to you to choose an appropriate style based on what you and your team consider more readable. Also remember that whenever conditions become too complex, it might be a good time to <a href="/react/docs/components-and-props.html#extracting-components">extract a component</a>.</p>
-<h3><a class="anchor" name="preventing-component-from-rendering"></a>Preventing Component from Rendering <a class="hash-link" href="#preventing-component-from-rendering">#</a></h3>
-<p>In rare cases you might want a component to hide itself even though it was rendered by another component. To do this return <code>null</code> instead of its render output.</p>
+<p>Assim como no JavaScript, cabe a você escolher um estilo adequado baseado no que você e seu time consideram mais legível. Lembrando também que sempre que condicionais começarem a ficar muito complexas, é uma boa hora para pensar em <a href="/react/docs/components-and-props.html#extracting-components">criar um componente</a>.</p>
+<h3><a class="anchor" name="prevenindo-a-renderizao-do-componente"></a>Prevenindo a renderização do componente <a class="hash-link" href="#prevenindo-a-renderizao-do-componente">#</a></h3>
+<p>Em casos raros, você pode querer que um componente se oculte mesmo que tenha sido rendezido por outro componente. Para fazer isso, retorno <code>null</code> ao invés de renderizar a saída.</p>
 
-<p>In the example below, the <code>&lt;WarningBanner /&gt;</code> is rendered depending on the value of the prop called <code>warn</code>. If the value of the prop is <code>false</code>, then the component does not render:</p>
+<p>No exemplo abaixo, o <code>&lt;WarningBanner /&gt;</code> é renderizado dependendo do valor de sua propriedade  <code>warn</code>. Se o valor da propriedade for <code>false</code>, então o componente não é renderizado:</p>
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kd">function</span> <span class="nx">WarningBanner</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
 <span class="hll">  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">props</span><span class="p">.</span><span class="nx">warn</span><span class="p">)</span> <span class="p">{</span>
 </span><span class="hll">    <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
@@ -272,7 +272,7 @@
   <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
 <span class="p">);</span>
 </code></pre></div>
-<p><a href="https://codepen.io/gaearon/pen/Xjoqwm?editors=0010">Try it on CodePen.</a></p>
+<p><a href="https://codepen.io/gaearon/pen/Xjoqwm?editors=0010">Teste este código no CodePen.</a></p>
 
 
     <div class="docs-prevnext">
@@ -293,67 +293,67 @@
       <ul>
         
           <li>
-            <a href="/react/docs/installation.html">Instalação</a>
+            <a href="/docs/installation.html">Instalação</a>
             
           </li>
         
           <li>
-            <a href="/react/docs/hello-world.html">Hello World</a>
+            <a href="/docs/hello-world.html">Hello World</a>
             
           </li>
         
           <li>
-            <a href="/react/docs/introducing-jsx.html">Introdução ao JSX</a>
+            <a href="/docs/introducing-jsx.html">Introdução ao JSX</a>
             
           </li>
         
           <li>
-            <a href="/react/docs/rendering-elements.html">Renderizando elementos</a>
+            <a href="/docs/rendering-elements.html">Renderizando elementos</a>
             
           </li>
         
           <li>
-            <a href="/react/docs/components-and-props.html">Componentes e propriedades</a>
+            <a href="/docs/components-and-props.html">Componentes e propriedades</a>
             
           </li>
         
           <li>
-            <a href="/react/docs/state-and-lifecycle.html">Estado(state) e ciclo de vida</a>
+            <a href="/docs/state-and-lifecycle.html">Estado(state) e ciclo de vida</a>
             
           </li>
         
           <li>
-            <a href="/react/docs/handling-events.html">Manipulando eventos</a>
+            <a href="/docs/handling-events.html">Manipulando eventos</a>
             
           </li>
         
           <li>
-            <a href="/react/docs/conditional-rendering.html" class="active">Conditional Rendering</a>
+            <a href="/docs/conditional-rendering.html" class="active">Renderização condicional</a>
             
           </li>
         
           <li>
-            <a href="/react/docs/lists-and-keys.html">Lists and Keys</a>
+            <a href="/docs/lists-and-keys.html">Lists and Keys</a>
             
           </li>
         
           <li>
-            <a href="/react/docs/forms.html">Forms</a>
+            <a href="/docs/forms.html">Forms</a>
             
           </li>
         
           <li>
-            <a href="/react/docs/lifting-state-up.html">Lifting State Up</a>
+            <a href="/docs/lifting-state-up.html">Lifting State Up</a>
             
           </li>
         
           <li>
-            <a href="/react/docs/composition-vs-inheritance.html">Composition vs Inheritance</a>
+            <a href="/docs/composition-vs-inheritance.html">Composition vs Inheritance</a>
             
           </li>
         
           <li>
-            <a href="/react/docs/thinking-in-react.html">Thinking In React</a>
+            <a href="/docs/thinking-in-react.html">Thinking In React</a>
             
           </li>
         
@@ -365,57 +365,57 @@
       <ul>
         
           <li>
-            <a href="/react/docs/jsx-in-depth.html">JSX In Depth</a>
+            <a href="/docs/jsx-in-depth.html">JSX In Depth</a>
             
           </li>
         
           <li>
-            <a href="/react/docs/typechecking-with-proptypes.html">Typechecking With PropTypes</a>
+            <a href="/docs/typechecking-with-proptypes.html">Typechecking With PropTypes</a>
             
           </li>
         
           <li>
-            <a href="/react/docs/refs-and-the-dom.html">Refs and the DOM</a>
+            <a href="/docs/refs-and-the-dom.html">Refs and the DOM</a>
             
           </li>
         
           <li>
-            <a href="/react/docs/uncontrolled-components.html">Uncontrolled Components</a>
+            <a href="/docs/uncontrolled-components.html">Uncontrolled Components</a>
             
           </li>
         
           <li>
-            <a href="/react/docs/optimizing-performance.html">Optimizing Performance</a>
+            <a href="/docs/optimizing-performance.html">Optimizing Performance</a>
             
           </li>
         
           <li>
-            <a href="/react/docs/react-without-es6.html">React Without ES6</a>
+            <a href="/docs/react-without-es6.html">React Without ES6</a>
             
           </li>
         
           <li>
-            <a href="/react/docs/react-without-jsx.html">React Without JSX</a>
+            <a href="/docs/react-without-jsx.html">React Without JSX</a>
             
           </li>
         
           <li>
-            <a href="/react/docs/reconciliation.html">Reconciliation</a>
+            <a href="/docs/reconciliation.html">Reconciliation</a>
             
           </li>
         
           <li>
-            <a href="/react/docs/context.html">Context</a>
+            <a href="/docs/context.html">Context</a>
             
           </li>
         
           <li>
-            <a href="/react/docs/web-components.html">Web Components</a>
+            <a href="/docs/web-components.html">Web Components</a>
             
           </li>
         
           <li>
-            <a href="/react/docs/higher-order-components.html">Higher-Order Components</a>
+            <a href="/docs/higher-order-components.html">Higher-Order Components</a>
             
           </li>
         
@@ -427,12 +427,12 @@
       <ul>
         
           <li>
-            <a href="/react/docs/react-api.html">React</a>
+            <a href="/docs/react-api.html">React</a>
             
               <ul>
                 
                   <li>
-                    <a href="/react/docs/react-component.html">React.Component</a>
+                    <a href="/docs/react-component.html">React.Component</a>
                   </li>
                 
               </ul>
@@ -440,60 +440,60 @@
           </li>
         
           <li>
-            <a href="/react/docs/react-dom.html">ReactDOM</a>
+            <a href="/docs/react-dom.html">ReactDOM</a>
             
           </li>
         
           <li>
-            <a href="/react/docs/react-dom-server.html">ReactDOMServer</a>
+            <a href="/docs/react-dom-server.html">ReactDOMServer</a>
             
           </li>
         
           <li>
-            <a href="/react/docs/dom-elements.html">DOM Elements</a>
+            <a href="/docs/dom-elements.html">DOM Elements</a>
             
           </li>
         
           <li>
-            <a href="/react/docs/events.html">SyntheticEvent</a>
+            <a href="/docs/events.html">SyntheticEvent</a>
             
           </li>
         
           <li>
-            <a href="/react/docs/addons.html">Add-Ons</a>
+            <a href="/docs/addons.html">Add-Ons</a>
             
               <ul>
                 
                   <li>
-                    <a href="/react/docs/perf.html">Performance Tools</a>
+                    <a href="/docs/perf.html">Performance Tools</a>
                   </li>
                 
                   <li>
-                    <a href="/react/docs/test-utils.html">Test Utilities</a>
+                    <a href="/docs/test-utils.html">Test Utilities</a>
                   </li>
                 
                   <li>
-                    <a href="/react/docs/animation.html">Animation</a>
+                    <a href="/docs/animation.html">Animation</a>
                   </li>
                 
                   <li>
-                    <a href="/react/docs/create-fragment.html">Keyed Fragments</a>
+                    <a href="/docs/create-fragment.html">Keyed Fragments</a>
                   </li>
                 
                   <li>
-                    <a href="/react/docs/update.html">Immutability Helpers</a>
+                    <a href="/docs/update.html">Immutability Helpers</a>
                   </li>
                 
                   <li>
-                    <a href="/react/docs/pure-render-mixin.html">PureRenderMixin</a>
+                    <a href="/docs/pure-render-mixin.html">PureRenderMixin</a>
                   </li>
                 
                   <li>
-                    <a href="/react/docs/shallow-compare.html">Shallow Compare</a>
+                    <a href="/docs/shallow-compare.html">Shallow Compare</a>
                   </li>
                 
                   <li>
-                    <a href="/react/docs/two-way-binding-helpers.html">Two-way Binding Helpers</a>
+                    <a href="/docs/two-way-binding-helpers.html">Two-way Binding Helpers</a>
                   </li>
                 
               </ul>
@@ -570,7 +570,7 @@
     </div>
   </section>
   <a href="https://code.facebook.com/projects/" target="_blank" class="fbOpenSource">
-    <img src="/react/img/oss_logo.png" alt="Facebook Open Source" width="170" height="45"/>
+    <img src="/img/oss_logo.png" alt="Facebook Open Source" width="170" height="45"/>
   </a>
   <section class="copyright">
     Copyright © 2016 Facebook Inc.
@@ -597,12 +597,6 @@
       js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=623268441017527";
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
-
-    docsearch({
-      apiKey: '36221914cce388c46d0420343e0bb32e',
-      indexName: 'react',
-      inputSelector: '#algolia-doc-search'
-    });
   </script>
 </body>
 </html>
