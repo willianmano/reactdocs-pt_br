@@ -3,8 +3,8 @@
 	<channel>
 		<title>React</title>
 		<description>Uma biblioteca JavaScript para construir interfaces de usuário</description>
-		<link>http://localhost:4000/</link>
-		<atom:link href="http://localhost:4000//feed.xml" rel="self" type="application/rss+xml" />
+		<link>https://facebook.github.io/reactdocs-pt_br/</link>
+		<atom:link href="https://facebook.github.io/reactdocs-pt_br//feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
 				<title>React v15.4.0</title>
@@ -162,8 +162,8 @@ Minified build for production: &lt;a href=&quot;https://unpkg.com/react-dom@15.4
 &lt;/ul&gt;
 </description>
 				<pubDate>2016-11-16T00:00:00-08:00</pubDate>
-				<link>http://localhost:4000//blog/2016/11/16/react-v15.4.0.html</link>
-				<guid isPermaLink="true">http://localhost:4000//blog/2016/11/16/react-v15.4.0.html</guid>
+				<link>https://facebook.github.io/reactdocs-pt_br//blog/2016/11/16/react-v15.4.0.html</link>
+				<guid isPermaLink="true">https://facebook.github.io/reactdocs-pt_br//blog/2016/11/16/react-v15.4.0.html</guid>
 			</item>
 		
 			<item>
@@ -384,8 +384,8 @@ I think we should just treat arrays of elements as a frag. This is useful for co
 &lt;p&gt;React&amp;#39;s approach to building user interfaces with functional programming principles has changed the way we do things in just a few short years. It goes without saying, but React would be nothing without the amazing open source community that&amp;#39;s built up around it!&lt;/p&gt;
 </description>
 				<pubDate>2016-09-28T00:00:00-07:00</pubDate>
-				<link>http://localhost:4000//blog/2016/09/28/our-first-50000-stars.html</link>
-				<guid isPermaLink="true">http://localhost:4000//blog/2016/09/28/our-first-50000-stars.html</guid>
+				<link>https://facebook.github.io/reactdocs-pt_br//blog/2016/09/28/our-first-50000-stars.html</link>
+				<guid isPermaLink="true">https://facebook.github.io/reactdocs-pt_br//blog/2016/09/28/our-first-50000-stars.html</guid>
 			</item>
 		
 			<item>
@@ -464,8 +464,8 @@ I think we should just treat arrays of elements as a frag. This is useful for co
 &lt;p&gt;We can&amp;#39;t wait to share the new code with you and are working as fast as we can to do so!&lt;/p&gt;
 </description>
 				<pubDate>2016-08-05T00:00:00-07:00</pubDate>
-				<link>http://localhost:4000//blog/2016/08/05/relay-state-of-the-state.html</link>
-				<guid isPermaLink="true">http://localhost:4000//blog/2016/08/05/relay-state-of-the-state.html</guid>
+				<link>https://facebook.github.io/reactdocs-pt_br//blog/2016/08/05/relay-state-of-the-state.html</link>
+				<guid isPermaLink="true">https://facebook.github.io/reactdocs-pt_br//blog/2016/08/05/relay-state-of-the-state.html</guid>
 			</item>
 		
 			<item>
@@ -601,8 +601,8 @@ The console output is tuned to be minimal to help you focus on the problems:&lt;
 &lt;p&gt;We would like to express our gratitude to &lt;a href=&quot;https://twitter.com/mxstbr&quot;&gt;Max Stoiber&lt;/a&gt;, &lt;a href=&quot;https://twitter.com/jbscript&quot;&gt;Jonny Buchanan&lt;/a&gt;, &lt;a href=&quot;https://twitter.com/eanplatter&quot;&gt;Ean Platter&lt;/a&gt;, &lt;a href=&quot;https://github.com/tylermcginnis&quot;&gt;Tyler McGinnis&lt;/a&gt;, &lt;a href=&quot;https://github.com/kentcdodds&quot;&gt;Kent C. Dodds&lt;/a&gt;, and &lt;a href=&quot;https://twitter.com/ericclemmons&quot;&gt;Eric Clemmons&lt;/a&gt; for their early feedback, ideas, and contributions.&lt;/p&gt;
 </description>
 				<pubDate>2016-07-22T00:00:00-07:00</pubDate>
-				<link>http://localhost:4000//blog/2016/07/22/create-apps-with-no-configuration.html</link>
-				<guid isPermaLink="true">http://localhost:4000//blog/2016/07/22/create-apps-with-no-configuration.html</guid>
+				<link>https://facebook.github.io/reactdocs-pt_br//blog/2016/07/22/create-apps-with-no-configuration.html</link>
+				<guid isPermaLink="true">https://facebook.github.io/reactdocs-pt_br//blog/2016/07/22/create-apps-with-no-configuration.html</guid>
 			</item>
 		
 			<item>
@@ -1136,8 +1136,8 @@ The console output is tuned to be minimal to help you focus on the problems:&lt;
 &lt;p&gt;We believe that the alternatives above are better for the vast majority of cases, and we invite you to try writing React apps without using mixins.&lt;/p&gt;
 </description>
 				<pubDate>2016-07-13T00:00:00-07:00</pubDate>
-				<link>http://localhost:4000//blog/2016/07/13/mixins-considered-harmful.html</link>
-				<guid isPermaLink="true">http://localhost:4000//blog/2016/07/13/mixins-considered-harmful.html</guid>
+				<link>https://facebook.github.io/reactdocs-pt_br//blog/2016/07/13/mixins-considered-harmful.html</link>
+				<guid isPermaLink="true">https://facebook.github.io/reactdocs-pt_br//blog/2016/07/13/mixins-considered-harmful.html</guid>
 			</item>
 		
 			<item>
@@ -1161,8 +1161,8 @@ The console output is tuned to be minimal to help you focus on the problems:&lt;
 &lt;p&gt;We do this so that the developer experience is as good as possible, while also keeping the production bundle size as small as possible. This feature shouldn&amp;#39;t require any changes on your side — use the &lt;code&gt;min.js&lt;/code&gt; files in production or bundle your application code with &lt;code&gt;process.env.NODE_ENV === &amp;#39;production&amp;#39;&lt;/code&gt; and you should be good to go!&lt;/p&gt;
 </description>
 				<pubDate>2016-07-11T00:00:00-07:00</pubDate>
-				<link>http://localhost:4000//blog/2016/07/11/introducing-reacts-error-code-system.html</link>
-				<guid isPermaLink="true">http://localhost:4000//blog/2016/07/11/introducing-reacts-error-code-system.html</guid>
+				<link>https://facebook.github.io/reactdocs-pt_br//blog/2016/07/11/introducing-reacts-error-code-system.html</link>
+				<guid isPermaLink="true">https://facebook.github.io/reactdocs-pt_br//blog/2016/07/11/introducing-reacts-error-code-system.html</guid>
 			</item>
 		
 			<item>
@@ -1200,8 +1200,8 @@ Minified build for production: &lt;a href=&quot;https://fb.me/react-dom-15.0.1.m
 &lt;/ul&gt;
 </description>
 				<pubDate>2016-04-08T00:00:00-07:00</pubDate>
-				<link>http://localhost:4000//blog/2016/04/08/react-v15.0.1.html</link>
-				<guid isPermaLink="true">http://localhost:4000//blog/2016/04/08/react-v15.0.1.html</guid>
+				<link>https://facebook.github.io/reactdocs-pt_br//blog/2016/04/08/react-v15.0.1.html</link>
+				<guid isPermaLink="true">https://facebook.github.io/reactdocs-pt_br//blog/2016/04/08/react-v15.0.1.html</guid>
 			</item>
 		
 			<item>
@@ -1404,8 +1404,8 @@ Minified build for production: &lt;a href=&quot;https://fb.me/react-dom-15.0.0.m
 &lt;/ul&gt;
 </description>
 				<pubDate>2016-04-07T00:00:00-07:00</pubDate>
-				<link>http://localhost:4000//blog/2016/04/07/react-v15.html</link>
-				<guid isPermaLink="true">http://localhost:4000//blog/2016/04/07/react-v15.html</guid>
+				<link>https://facebook.github.io/reactdocs-pt_br//blog/2016/04/07/react-v15.html</link>
+				<guid isPermaLink="true">https://facebook.github.io/reactdocs-pt_br//blog/2016/04/07/react-v15.html</guid>
 			</item>
 		
 			<item>
@@ -1440,8 +1440,8 @@ Minified build for production: &lt;a href=&quot;https://fb.me/react-dom-server-0
 &lt;/ul&gt;
 </description>
 				<pubDate>2016-03-29T00:00:00-07:00</pubDate>
-				<link>http://localhost:4000//blog/2016/03/29/react-v0.14.8.html</link>
-				<guid isPermaLink="true">http://localhost:4000//blog/2016/03/29/react-v0.14.8.html</guid>
+				<link>https://facebook.github.io/reactdocs-pt_br//blog/2016/03/29/react-v0.14.8.html</link>
+				<guid isPermaLink="true">https://facebook.github.io/reactdocs-pt_br//blog/2016/03/29/react-v0.14.8.html</guid>
 			</item>
 		
 			<item>
@@ -1477,8 +1477,8 @@ Minified build for production: &lt;a href=&quot;https://fb.me/react-dom-15.0.0-r
 &lt;/ul&gt;
 </description>
 				<pubDate>2016-03-16T00:00:00-07:00</pubDate>
-				<link>http://localhost:4000//blog/2016/03/16/react-v15-rc2.html</link>
-				<guid isPermaLink="true">http://localhost:4000//blog/2016/03/16/react-v15-rc2.html</guid>
+				<link>https://facebook.github.io/reactdocs-pt_br//blog/2016/03/16/react-v15-rc2.html</link>
+				<guid isPermaLink="true">https://facebook.github.io/reactdocs-pt_br//blog/2016/03/16/react-v15-rc2.html</guid>
 			</item>
 		
 	</channel>
