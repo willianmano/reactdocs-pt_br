@@ -6,9 +6,9 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Forms - React</title>
+  <title>Formulários - React</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta property="og:title" content="Forms - React">
+  <meta property="og:title" content="Formulários - React">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://facebook.github.io/react/docs/forms.html">
   <meta property="og:image" content="https://facebook.github.io/react/img/logo_og.png">
@@ -47,7 +47,7 @@
 
     <div class="nav-main">
   <div class="wrap">
-    <a class="nav-home" href="/">
+    <a class="nav-home" href="/reactdocs-pt_br">
       <img class="nav-logo" src="/reactdocs-pt_br/img/logo.svg" width="36" height="36">
       React
     </a>
@@ -70,11 +70,11 @@
   <div class="inner-content">
     <a class="edit-page-link" href="https://github.com/facebook/react/tree/master/docs/docs/forms.md" target="_blank">Edit on GitHub</a>
     <h1>
-      Forms
+      Formulários
     </h1>
     <div class="subHeader"></div>
 
-    <p>HTML form elements work a little bit differently from other DOM elements in React, because form elements naturally keep some internal state. For example, this form in plain HTML accepts a single name:</p>
+    <p>Elementos HTML de formulário trabalham um pouco diferente dos outros elementos DOM no React, porque elementos de formulário mantém naturalmente algum estado interno. Por exemplo, este formulário em HTML puro aceita um único nome:</p>
 <div class="highlight"><pre><code class="language-html" data-lang="html"><span></span><span class="p">&lt;</span><span class="nt">form</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span>
     Name:
@@ -83,13 +83,13 @@
   <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;Submit&quot;</span> <span class="p">/&gt;</span>
 <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
 </code></pre></div>
-<p>This form has the default HTML form behavior of browsing to a new page when the user submits the form. If you want this behavior in React, it just works. But in most cases, it&#39;s convenient to have a JavaScript function that handles the submission of the form and has access to the data that the user entered into the form. The standard way to achieve this is with a technique called &quot;controlled components&quot;.</p>
-<h2><a class="anchor" name="controlled-components"></a>Controlled Components <a class="hash-link" href="#controlled-components">#</a></h2>
-<p>In HTML, form elements such as <code>&lt;input&gt;</code>, <code>&lt;textarea&gt;</code>, and <code>&lt;select&gt;</code> typically maintain their own state and update it based on user input. In React, mutable state is typically kept in the state property of components, and only updated with <a href="/react/docs/react-component.html#setstate"><code>setState()</code></a>.</p>
+<p>Este formulário tem o comportamento padrão de um formulário HTML de navegar para uma nova página quando um usuário enviar o formulário. Se você quiser este comportamento no React, ele simplesmente funciona. Mas na maioria dos casos, é conveniente ter uma função JavaScript que manipula o envio do formulário e tem acesso ao que o usuário inseriu no formulário. A maneira padrão de conseguir isso é com uma técnica chamada &quot;componentes controlados&quot;.</p>
+<h2><a class="anchor" name="componentes-controlados"></a>Componentes controlados <a class="hash-link" href="#componentes-controlados">#</a></h2>
+<p>Em HTML, elementos de formulário como <code>&lt;input&gt;</code>, <code>&lt;textarea&gt;</code>, e <code>&lt;select&gt;</code> tipicamente mantêm seus próprios estados e atualizam-nos baseado na entrada do usuário. Em React, estado mutável é tipicamente mantido na propriedade estado dos componentes, e só é atualizado com <a href="/react/docs/react-component.html#setstate"><code>setState()</code></a>.</p>
 
-<p>We can combine the two by making the React state be the &quot;single source of truth&quot;. Then the React component that renders a form also controls what happens in that form on subsequent user input. An input form element whose value is controlled by React in this way is called a &quot;controlled component&quot;.</p>
+<p>Nós podemos combinar os dois fazendo o estado do React ser a &quot;única fonte de verdade&quot;. Em seguida o componente React que renderiza um formulário também controla o que acontece nesse formulário em uma entrada subsequente do usuário. Um elemento de formulário de entrada cujo valor é controlado pelo React dessa forma é chamado de &quot;componente controlado&quot;.</p>
 
-<p>For example, if we want to make the previous example log the name when it is submitted, we can write the form as a controlled component:</p>
+<p>Por exemplo, se nós quisermos fazer o exemplo anterior <em>log</em> o nome quando ele é enviado, nós podemos escrever o formulário como um componente controlado:</p>
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kr">class</span> <span class="nx">NameForm</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
   <span class="nx">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
     <span class="kr">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
@@ -121,21 +121,21 @@
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<p><a href="https://codepen.io/gaearon/pen/VmmPgp?editors=0010">Try it on CodePen.</a></p>
+<p><a href="https://codepen.io/gaearon/pen/VmmPgp?editors=0010">Teste este código no CodePen.</a></p>
 
-<p>Since the <code>value</code> attribute is set on our form element, the displayed value will always be <code>this.state.value</code>, making the React state the source of truth. Since <code>handleChange</code> runs on every keystroke to update the React state, the displayed value will update as the user types.</p>
+<p>Uma vez que o atributo <code>value</code> é definido no nosso elemento do formulário, o valor exibido sempre será <code>this.state.value</code>, tornando o estado do React a fonte de verdade. Como o <code>handleChange</code> executa em cada pressionamento de tecla para atualizar o estado do React, o valor exibido será atualizado conforme o que o usuário digita.</p>
 
-<p>With a controlled component, every state mutation will have an associated handler function. This makes it straightforward to modify or validate user input. For example, if we wanted to enforce that names are written with all uppercase letters, we could write <code>handleChange</code> as:</p>
+<p>Com um componente controlado, cada mutação de estado terá uma função de manipulação associada. Isto torna fácil modificar ou validar a entrada do usuário. Por exemplo, se você quer forçar que os nomes sejam escritos com todas as letras maiúsculas, poderíamos escrever o código em <code>handleChange</code> como:</p>
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="nx">handleChange</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
 <span class="hll">  <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span><span class="nx">value</span><span class="o">:</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">.</span><span class="nx">toUpperCase</span><span class="p">()});</span>
 </span><span class="p">}</span>
-</code></pre></div><h2><a class="anchor" name="the-textarea-tag"></a>The textarea Tag <a class="hash-link" href="#the-textarea-tag">#</a></h2>
-<p>In HTML, a <code>&lt;textarea&gt;</code> element defines its text by its children:</p>
+</code></pre></div><h2><a class="anchor" name="a-tag-textarea"></a>A tag textarea <a class="hash-link" href="#a-tag-textarea">#</a></h2>
+<p>Em HTML, o elemento <code>&lt;textarea&gt;</code> define seu texto pelos seus filhos:</p>
 <div class="highlight"><pre><code class="language-html" data-lang="html"><span></span><span class="p">&lt;</span><span class="nt">textarea</span><span class="p">&gt;</span>
   Hello there, this is some text in a text area
 <span class="p">&lt;/</span><span class="nt">textarea</span><span class="p">&gt;</span>
 </code></pre></div>
-<p>In React, a <code>&lt;textarea&gt;</code> uses a <code>value</code> attribute instead. This way, a form using a <code>&lt;textarea&gt;</code> can be written very similarly to a form that uses a single-line input:</p>
+<p>Em React, um <code>&lt;textarea&gt;</code> usa um atributo em vez disso. Desta forma, um formulário usando um <code>&lt;textarea&gt;</code> pode ser escrito de forma muito semelhante a um formulário que usa um input de linha única:</p>
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kr">class</span> <span class="nx">EssayForm</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
   <span class="nx">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
     <span class="kr">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
@@ -169,9 +169,9 @@
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>Notice that <code>this.state.value</code> is initialized in the constructor, so that the text area starts off with some text in it.</p>
-<h2><a class="anchor" name="the-select-tag"></a>The select Tag <a class="hash-link" href="#the-select-tag">#</a></h2>
-<p>In HTML, <code>&lt;select&gt;</code> creates a drop-down list. For example, this HTML creates a drop-down list of flavors:</p>
+<p>Observe que <code>this.state.value</code> é inicializado no construtor, então o textarea começå com algum texto nele.</p>
+<h2><a class="anchor" name="a-tag-select"></a>A tag select <a class="hash-link" href="#a-tag-select">#</a></h2>
+<p>Em HTML, <code>&lt;select&gt;</code> cria uma lista drop-down. Por exemplo, este HTML cria uma lista drop-down de sabores:</p>
 <div class="highlight"><pre><code class="language-html" data-lang="html"><span></span><span class="p">&lt;</span><span class="nt">select</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;grapefruit&quot;</span><span class="p">&gt;</span>Grapefruit<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;lime&quot;</span><span class="p">&gt;</span>Lime<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
@@ -179,7 +179,7 @@
   <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;mango&quot;</span><span class="p">&gt;</span>Mango<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">select</span><span class="p">&gt;</span>
 </code></pre></div>
-<p>Note that the Coconut option is initially selected, because of the <code>selected</code> attribute. React, instead of using this <code>selected</code> attribute, uses a <code>value</code> attribute on the root <code>select</code> tag. This is more convenient in a controlled component because you only need to update it in one place. For example:</p>
+<p>Observe que a opção Coconut é inicializada selecionada por causa do atributo <code>selected</code>. React, ao invés de usar o atributo <code>selected</code>, usa um atributo <code>value</code> na raiz da tag <code>select</code>. Isto é mais conveniente em um componente controlado porque você só precisa atualizar em um lugar. Por exemplo:</p>
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kr">class</span> <span class="nx">FlavorForm</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
   <span class="nx">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
     <span class="kr">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
@@ -216,11 +216,11 @@
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<p><a href="https://codepen.io/gaearon/pen/JbbEzX?editors=0010">Try it on CodePen.</a></p>
+<p><a href="https://codepen.io/gaearon/pen/JbbEzX?editors=0010">Teste este código no CodePen.</a></p>
 
-<p>Overall, this makes it so that <code>&lt;input type=&quot;text&quot;&gt;</code>, <code>&lt;textarea&gt;</code>, and <code>&lt;select&gt;</code> all work very similarly - they all accept a <code>value</code> attribute that you can use to implement a controlled component.</p>
-<h2><a class="anchor" name="alternatives-to-controlled-components"></a>Alternatives to Controlled Components <a class="hash-link" href="#alternatives-to-controlled-components">#</a></h2>
-<p>It can sometimes be tedious to use controlled components, because you need to write an event handler for every way your data can change and pipe all of the input state through a React component. This can become particularly annoying when you are converting a preexisting codebase to React, or integrating a React application with a non-React library. In these situations, you might want to check out <a href="/react/docs/uncontrolled-components.html">uncontrolled components</a>, an alternative technique for implementing input forms.</p>
+<p>Em geral, isto faz com que <code>&lt;input type=&quot;text&quot;&gt;</code>, <code>&lt;textarea&gt;</code> e <code>&lt;select&gt;</code> trabalhem de forma similar. Todos eles aceitam um atributo <code>value</code> que você pode usar para implementar um componente controlado.</p>
+<h2><a class="anchor" name="alternativas-aos-componentes-controlados"></a>Alternativas aos componentes controlados <a class="hash-link" href="#alternativas-aos-componentes-controlados">#</a></h2>
+<p>As vezes pode ser tedioso usar componentes controlados, porque você precisa escrever um evento manipulador para cada maneira que os dados podem mudar e centralizar todo o estado através de um componente React. Isto pode se tornar particularmente irritante quando está convertendo uma base de código preexistente para React, ou integrando uma aplicação React com uma biblioteca não React. Nessas situações, você pode querer olhar <a href="/react/docs/uncontrolled-components.html">componentes não controlados</a>, uma técnica alternativa para implementar entradas de formulários.</p>
 
 
     <div class="docs-prevnext">
@@ -286,7 +286,7 @@
           </li>
         
           <li>
-            <a href="/reactdocs-pt_br/docs/forms.html" class="active">Forms</a>
+            <a href="/reactdocs-pt_br/docs/forms.html" class="active">Formulários</a>
             
           </li>
         
