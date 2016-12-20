@@ -74,9 +74,9 @@
     </h1>
     <div class="subHeader"></div>
 
-    <p>Componentes permitem você quebrar a interface de usuário em independente, reusáveis peças e pensar em cada peça isolada.</p>
+    <p>Componentes permitem você quebrar a interface de usuário em peças independentes, reusáveis e pensaa em cada peça isoladamente.</p>
 
-<p>Conceitualmente, componentes são como funções JavaScript. Eles aceitam entradas arbitrárias(chamadas de &quot;props&quot;) e retornar elementos React descrevendo o que deve aparecer na tela.</p>
+<p>Conceitualmente, componentes são como funções JavaScript. Eles aceitam entradas arbitrárias(chamadas de &quot;props&quot;) e retornam elementos React descrevendo o que deve aparecer na tela.</p>
 <h2><a class="anchor" name="componentes-funcionais-e-classes"></a>Componentes funcionais e classes <a class="hash-link" href="#componentes-funcionais-e-classes">#</a></h2>
 <p>A maneira mais simples de definir um componente é escrever uma função JavaScript:</p>
 <div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kd">function</span> <span class="nx">Welcome</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
@@ -166,9 +166,9 @@
 <p>Componentes devem retornar um único elemento root. É por isso que adicionamos uma <code>&lt;div&gt;</code> para conter todos os elementos de <code>&lt;Welcome /&gt;</code>.</p>
 </blockquote>
 <h2><a class="anchor" name="extraindo-componentes"></a>Extraindo componentes <a class="hash-link" href="#extraindo-componentes">#</a></h2>
-<p>Don&#39;t be afraid to split components into smaller components.</p>
+<p>Não tenha medo de separar componentes em componentes menores.</p>
 
-<p>For example, consider this <code>Comment</code> component:</p>
+<p>Por exemplo, considere este componentes <code>Comment</code></p>
 <div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kd">function</span> <span class="nx">Comment</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">return</span> <span class="p">(</span>
     <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;Comment&quot;</span><span class="o">&gt;</span>
@@ -193,11 +193,12 @@
 </code></pre></div>
 <p><a href="http://codepen.io/gaearon/pen/VKQwEo?editors=0010">Teste este código no CodePen.</a></p>
 
-<p>It accepts <code>author</code> (an object), <code>text</code> (a string), and <code>date</code> (a date) as props, and describes a comment on a social media website.</p>
+<p>Ele aceita <code>author</code> (um objeto), <code>text</code> (uma string), e <code>date</code> (uma data) como propriedades e descreve um comentário numa rede social.</p>
 
-<p>This component can be tricky to change because of all the nesting, and it is also hard to reuse individual parts of it. Let&#39;s extract a few components from it.</p>
+<p>Esse componente pode ser complicado para alterar devido a todos os subcomponentes e pode ser difícil de reusar partes dele. Vamos extrair alguns componentes desse componente.</p>
 
-<p>First, we will extract <code>Avatar</code>:</p>
+<p>Primeiro vamos extrair <code>Avatar</code>:</p>
+
 <div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kd">function</span> <span class="nx">Avatar</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">return</span> <span class="p">(</span>
 <span class="hll">    <span class="o">&lt;</span><span class="nx">img</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;Avatar&quot;</span>
@@ -207,11 +208,13 @@
 </span>  <span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>The <code>Avatar</code> doesn&#39;t need to know that it is being rendered inside a <code>Comment</code>. This is why we have given its prop a more generic name: <code>user</code> rather than <code>author</code>.</p>
 
-<p>We recommend naming props from the component&#39;s own point of view rather than the context in which it is being used.</p>
+<p>O <code>Avatar</code> não precisa saber the é renderizado dentro de <code>Comment</code>. Isso é porque nós demos a ele um nome de propriedade mais genérico: <code>user</code> em vez de <code>author</code>.</p>
 
-<p>We can now simplify <code>Comment</code> a tiny bit:</p>
+<p>Nós recomendamos nomear propriedades a partir do ponto de vista do componente em vez de o contexto no qual ele está sendo usado.</p>
+
+<p>Nos podemos simplificar <code>Comment</code> mais um pouco:</p>
+
 <div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kd">function</span> <span class="nx">Comment</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">return</span> <span class="p">(</span>
     <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;Comment&quot;</span><span class="o">&gt;</span>
@@ -231,7 +234,9 @@
   <span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>Next, we will extract a <code>UserInfo</code> component that renders an <code>Avatar</code> next to user&#39;s name:</p>
+
+<p>A seguir, nós vamos extrair a <code>UserInfo</code> do compoente que renderiza um <code>Avatar</code> próximo ao nome do usuário:</p>
+
 <div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kd">function</span> <span class="nx">UserInfo</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">return</span> <span class="p">(</span>
 <span class="hll">    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;UserInfo&quot;</span><span class="o">&gt;</span>
@@ -243,7 +248,8 @@
 </span>  <span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>This lets us simplify <code>Comment</code> even further:</p>
+
+<p>Isso nos faz simplificar  <code>Comment</code> ainda mais:</p>
 <div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kd">function</span> <span class="nx">Comment</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">return</span> <span class="p">(</span>
     <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;Comment&quot;</span><span class="o">&gt;</span>
